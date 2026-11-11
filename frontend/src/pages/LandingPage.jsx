@@ -4,7 +4,6 @@ import {
   Stethoscope, HeartPulse, AlertCircle, ShieldCheck, CheckCircle2,
   ChevronRight, BarChart2, Brain, Activity, Zap, Lock, Sparkles, Bot
 } from 'lucide-react';
-import { DiaCareAvatar } from '../components/DiaCareChatbot';
 
 /* ─── 3D Tilt Card ─── */
 const TiltCard = ({ children, className = '' }) => {
@@ -385,18 +384,6 @@ const LandingPage = () => {
                 Begin Assessment <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
-            <button
-              type="button"
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent('open-medo'));
-                window.dispatchEvent(new CustomEvent('open-diacare'));
-              }}
-              className="glass-btn group relative inline-flex items-center px-7 py-3.5 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300 hover:border-sky-300/60 cursor-pointer"
-            >
-              <DiaCareAvatar size={24} className="mr-2.5" />
-              <span>Ask Medo AI</span>
-              <span className="ml-2 w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-            </button>
             <Link
               to="/analytics"
               className="glass-btn inline-flex items-center px-7 py-3.5 rounded-full text-white/90 font-bold text-sm shadow-xl hover:text-white transition-all duration-300"
