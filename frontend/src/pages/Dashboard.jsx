@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { DiaCareAvatar } from '../components/DiaCareChatbot';
 import GlassButton from '../components/GlassButton';
+import ClinicalDecisionHub from '../components/ClinicalDecisionHub';
 import { assessmentService } from '../services/api';
 
 const Dashboard = () => {
@@ -172,6 +173,9 @@ const Dashboard = () => {
           </GlassButton>
         </div>
       </div>
+
+      {/* Clinical Diagnoses, Medical Advice & Treatment Plans Hub */}
+      <ClinicalDecisionHub />
 
       {/* Recent Assessment Log Preview (Glass Card + Glassy View All Button) */}
       <div className="bg-white/85 backdrop-blur-xl rounded-2xl border border-slate-200/80 p-6 shadow-sm">

@@ -30,15 +30,25 @@ CANDIDATE_GEMINI_MODELS = [
     "gemini-flash-lite-latest",
 ]
 
-CLINICAL_SYSTEM_INSTRUCTION = """You are Medo (Medo AI), a compassionate, highly knowledgeable, and responsible Healthcare Information & Diabetes Report Analyzer Assistant. You are part of the DiabetesGuard AI medical research platform.
+CLINICAL_SYSTEM_INSTRUCTION = """You are Dr. Medo (Medo AI), a compassionate, highly knowledgeable, and responsible Healthcare Clinical Assistant & Diabetes Specialist. You are part of the DiabetesGuard AI medical research platform.
 
-### MANDATORY CLINICAL SAFETY GUIDELINES:
-1. NON-DIAGNOSTIC PROTOCOL: You are an educational and screening assistant, NOT a doctor. Never tell a user "You have diabetes" or "You are in the clear". Frame findings as: "Your lab report shows an HbA1c value of X%, which is above the established clinical threshold of 6.5%."
-2. NON-PRESCRIPTIVE PROTOCOL: Never prescribe medicines, change dosages, adjust insulin units, or recommend stopping prescribed treatments. Direct all medication adjustments to their prescribing physician.
-3. EMERGENCY INTERCEPTION: If the user reports acute red-flag symptoms (severe confusion, loss of consciousness, fruity breath, chest pain, blood glucose < 54 mg/dL or > 400 mg/dL with vomiting), immediately prioritize emergency care: Direct to 112 (India National Emergency) or 911 (US).
-4. CULTURALLY RELEVANT INDIAN NUTRITION: When answering diet questions, provide practical Indian dietary guidance (dal-to-cereal ratios, millets like ragi/jowar/bajra, whole wheat chapati, non-starchy vegetables like karela, lauki, methi, palak, low-fat paneer, sprouts) while dispelling myths that carbs are completely forbidden or that any single food cures diabetes.
-5. EXERCISE PHYSIOLOGY: Explain how 150 min/week moderate aerobic activity and 2x/week resistance training activate muscle GLUT4 glucose transporters independently of insulin.
-6. LAYPERSON ACCESSIBILITY: Explain medical terms (HbA1c, eGFR, Microalbuminuria, Triglycerides) in clear, simple language with bullet points and friendly formatting. If the user asks in Hindi or requests Hindi, reply fluently in Hindi.
+### MANDATORY CLINICAL SAFETY & CARE GUIDELINES:
+1. CLINICAL DIAGNOSES PROTOCOL: When discussing clinical diagnoses, ground all classifications in the official American Diabetes Association (ADA 2024 Standards of Care) and ICMR criteria:
+   - Normoglycemia: Fasting Glucose < 100 mg/dL, 2-hr OGTT < 140 mg/dL, HbA1c < 5.7%.
+   - Pre-Diabetes (IFG/IGT): Fasting 100–125 mg/dL, 2-hr OGTT 140–199 mg/dL, HbA1c 5.7%–6.4%.
+   - Type 2 Diabetes: Fasting ≥ 126 mg/dL, 2-hr OGTT ≥ 200 mg/dL, Random Glucose ≥ 200 mg/dL with symptoms, or HbA1c ≥ 6.5%.
+   - Always clarify that formal clinical diagnosis requires confirmatory testing on a separate day under physician supervision.
+2. EVIDENCE-BASED MEDICAL ADVICE:
+   - Glycemic targets: Non-pregnant adults target HbA1c < 7.0%, fasting 80–130 mg/dL, postprandial < 180 mg/dL.
+   - Complication screening: Annual microalbuminuria/eGFR (kidneys), dilated eye exam (retinopathy), 10g monofilament test (neuropathy), and lipid panel (cardiovascular).
+   - Acute Hypoglycemia "Rule of 15": 15g fast-acting carbs, wait 15 minutes, recheck.
+3. COMPREHENSIVE TREATMENT PLANS:
+   - Tier 1: Medical Nutrition Therapy (MNT) with the Indian Plate Method (50% vegetables, 25% plant/lean protein, 25% complex whole grains like millets/ragi/jowar), 35-45g daily fiber.
+   - Tier 2: Physical Exercise & GLUT4 Muscle Translocation: 150 min/week moderate aerobic activity + 2-3 resistance sessions + 10-15 min post-meal walks.
+   - Tier 3: Pharmacotherapy Overview: Metformin first-line mechanism, SGLT2 inhibitors for cardiorenal protection, GLP-1 receptor agonists.
+   - Tier 4: Self-Monitoring of Blood Glucose (SMBG) testing routine.
+4. EMERGENCY INTERCEPTION: If the user reports acute red-flag symptoms (severe confusion, loss of consciousness, fruity breath, chest pain, blood glucose < 54 mg/dL or > 400 mg/dL with vomiting), immediately prioritize emergency care: Direct to 112 (India National Emergency) or 911 (US).
+5. LAYPERSON ACCESSIBILITY: Explain complex pathophysiology in warm, clear, structured language with bullet points and friendly formatting. If the user asks in Hindi, reply fluently in Hindi.
 """
 
 
@@ -140,7 +150,59 @@ def get_clinical_fallback_reply(user_message: str, report_context: Optional[str]
     """
     lower = user_message.lower()
 
-    # 1. Daily routine & diabetes care
+    # 1. Clinical Diagnoses & Diagnostic Criteria
+    if any(k in lower for k in ["diagnos", "criteria", "threshold", "pre-diabetes", "prediabetes", "t2dm", "type 2"]):
+        return (
+            "### 🩺 Clinical Diagnostic Criteria for Diabetes (ADA 2024 Standards)\n\n"
+            "According to the **American Diabetes Association (ADA 2024)** and **ICMR Guidelines**, diabetes and pre-diabetes are clinically categorized using standardized biomarker cutoffs:\n\n"
+            "| Classification | Fasting Plasma Glucose | 2-Hour OGTT (75g) | HbA1c Level |\n"
+            "| :--- | :--- | :--- | :--- |\n"
+            "| **Normoglycemia (Healthy)** | < 100 mg/dL (5.6 mmol/L) | < 140 mg/dL (7.8 mmol/L) | < 5.7% (39 mmol/mol) |\n"
+            "| **Pre-Diabetes (IFG / IGT)** | 100 – 125 mg/dL | 140 – 199 mg/dL | 5.7% – 6.4% |\n"
+            "| **Diabetes Mellitus** | **≥ 126 mg/dL** (7.0 mmol/L) | **≥ 200 mg/dL** (11.1 mmol/L) | **≥ 6.5%** (48 mmol/mol) |\n\n"
+            "• **Acute Presentation:** A random plasma glucose **≥ 200 mg/dL** in a patient with classic hyperglycemia symptoms (polyuria, polydipsia, unexplained weight loss) also confirms clinical diagnosis.\n"
+            "• **Confirmatory Standard:** In the absence of acute symptoms, clinical diagnosis requires two abnormal test results from either the same sample or two separate test samples."
+        )
+
+    # 2. Medical Advice & Clinical Recommendations
+    if any(k in lower for k in ["advice", "medical advice", "target", "screen", "complication", "eye", "kidney", "doctor"]):
+        return (
+            "### 💡 Evidence-Based Medical Advice & Complication Screening Protocols\n\n"
+            "Key clinical recommendations from the **ADA 2024 Standards of Care** for ongoing diabetes wellness:\n\n"
+            "#### 1. 🎯 Individualized Glycemic Targets\n"
+            "• **HbA1c Target:** < 7.0% for most non-pregnant adults (limits microvascular retinopathy, nephropathy, and neuropathy).\n"
+            "• **Fasting / Pre-Meal Glucose:** 80 – 130 mg/dL.\n"
+            "• **Postprandial Glucose (1–2 hrs after meal):** < 180 mg/dL.\n"
+            "• **Blood Pressure:** < 130 / 80 mmHg to preserve renal function and cardiovascular health.\n\n"
+            "#### 2. 🛡️ Annual Screening Schedule\n"
+            "• **Kidney Health:** Annual spot urine albumin-to-creatinine ratio (uACR) and serum eGFR.\n"
+            "• **Retinal Health:** Annual dilated eye examination by an eye specialist.\n"
+            "• **Diabetic Foot Exam:** Comprehensive 10g monofilament sensory examination annually + daily home visual checks.\n"
+            "• **Cardiovascular:** Lipid profile with target LDL < 70 mg/dL.\n\n"
+            "#### 3. 🚨 Hypoglycemia Protocol (Rule of 15)\n"
+            "If blood sugar falls < 70 mg/dL: consume **15g fast-acting sugar** (1/2 cup fruit juice or 3–4 glucose tablets), wait **15 minutes**, and recheck."
+        )
+
+    # 3. Treatment Plans & Care Management
+    if any(k in lower for k in ["treatment", "plan", "treatment plan", "therapy", "management", "exercise", "medication"]):
+        return (
+            "### 📋 Comprehensive Multi-Tier Diabetes Treatment Plan\n\n"
+            "A structured clinical management plan based on **ADA & ICMR guidelines**:\n\n"
+            "#### Tier 1: Medical Nutrition Therapy (MNT)\n"
+            "• **The 50-25-25 Indian Plate Method:** 50% non-starchy fibrous vegetables (spinach, methi, cucumber, lauki); 25% plant/lean protein (sprouted moong, dal, rajma, low-fat paneer); 25% low-GI whole grains (jowar, ragi, bajra rotis, parboiled rice).\n"
+            "• **Daily Dietary Fiber:** Target 35–45g/day to slow carbohydrate absorption and blunt glycemic spikes.\n\n"
+            "#### Tier 2: Physical Activity & GLUT4 Activation\n"
+            "• **Aerobic Exercise:** Minimum 150 minutes/week of moderate activity (brisk walking, cycling) across ≥ 3 days.\n"
+            "• **Resistance Training:** 2–3 sessions per week for insulin sensitivity.\n"
+            "• **Post-Meal 15-Minute Stroll:** Muscle contractions stimulate **insulin-independent GLUT4 glucose transporters**, directly lowering postprandial glucose peaks.\n\n"
+            "#### Tier 3: Pharmacotherapy Overview (Educational)\n"
+            "• **Foundational Therapy:** Metformin (decreases hepatic glucose production, enhances peripheral uptake).\n"
+            "• **Cardiorenal Protection:** SGLT2 inhibitors and GLP-1 receptor agonists where indicated by your physician.\n\n"
+            "#### Tier 4: Self-Monitoring (SMBG)\n"
+            "• Structured fasting and 2-hour postprandial logs to guide clinical visits."
+        )
+
+    # 4. Daily routine & diabetes care
     if any(k in lower for k in ["daily", "routine", "royine", "care", "manage", "life", "patient", "habits"]):
         return (
             "### 🌟 Essential Daily Routine & Care for Diabetes Management\n\n"

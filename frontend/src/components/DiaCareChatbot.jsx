@@ -2,127 +2,46 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   Send, Upload, FileText, CheckCircle2, AlertTriangle,
   Sparkles, RefreshCw, X, ChevronDown, ChevronUp, Stethoscope,
-  MessageCircle, Minimize2, Paperclip
+  MessageCircle, Minimize2, Paperclip, Move, GripVertical
 } from 'lucide-react';
+import medoDoctorImg from '../assets/medo-doctor.jpg';
 import { diacareService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
-/* ─── Custom High-Tech 3D Medo AI Avatar ─── */
-export const DiaCareAvatar = ({ size = 36, className = '' }) => {
+/**
+ * ═══════════════════════════════════════════════════════════════════
+ * Custom 3D Friendly Dr. Medo AI Avatar (Pixar-Style Character)
+ * ═══════════════════════════════════════════════════════════════════
+ */
+export const DiaCareAvatar = ({ size = 38, className = '' }) => {
   return (
     <div
-      className={`relative flex items-center justify-center flex-shrink-0 ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative inline-flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden border-2 border-white/90 bg-gradient-to-tr from-sky-400 via-indigo-500 to-sky-200 shadow-md transition-transform duration-300 ${className}`}
+      style={{
+        width: size,
+        height: size,
+        boxShadow: '0 4px 14px rgba(56, 189, 248, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6)'
+      }}
     >
-      <svg
-        viewBox="0 0 100 100"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-[0_4px_14px_rgba(56,189,248,0.5)]"
-      >
-        <defs>
-          <linearGradient id="dcHelmet" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="45%" stopColor="#e0e7ff" />
-            <stop offset="100%" stopColor="#6366f1" />
-          </linearGradient>
-
-          <linearGradient id="dcVisor" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0b1120" />
-            <stop offset="100%" stopColor="#1e1b4b" />
-          </linearGradient>
-
-          <linearGradient id="dcOrbit" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#38bdf8" />
-            <stop offset="50%" stopColor="#818cf8" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#c084fc" stopOpacity="0.2" />
-          </linearGradient>
-
-          <filter id="dcGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        {/* Orbiting Holographic Ring */}
-        <g className="animate-orbit-spin" style={{ transformOrigin: '50px 50px' }}>
-          <ellipse
-            cx="50"
-            cy="50"
-            rx="46"
-            ry="18"
-            stroke="url(#dcOrbit)"
-            strokeWidth="3.5"
-            strokeDasharray="8 5"
-            transform="rotate(-25 50 50)"
-          />
-          <circle cx="94" cy="50" r="4" fill="#38bdf8" filter="url(#dcGlow)" />
-        </g>
-
-        {/* Robot Head (Glossy 3D Helmet) */}
-        <rect
-          x="18"
-          y="18"
-          width="64"
-          height="60"
-          rx="24"
-          fill="url(#dcHelmet)"
-          stroke="rgba(255,255,255,0.85)"
-          strokeWidth="2"
-        />
-
-        {/* Glossy Top Light Curve */}
-        <path
-          d="M 28 22 Q 50 18 72 22 Q 50 26 28 22"
-          fill="rgba(255, 255, 255, 0.75)"
-        />
-
-        {/* Cyber Ear Nodes */}
-        <rect x="11" y="38" width="8" height="20" rx="4" fill="#4f46e5" stroke="#38bdf8" strokeWidth="1" />
-        <rect x="81" y="38" width="8" height="20" rx="4" fill="#4f46e5" stroke="#38bdf8" strokeWidth="1" />
-
-        {/* Dark Visor Screen */}
-        <rect
-          x="24"
-          y="28"
-          width="52"
-          height="38"
-          rx="14"
-          fill="url(#dcVisor)"
-          stroke="rgba(56, 189, 248, 0.5)"
-          strokeWidth="1.5"
-        />
-
-        {/* Visor Glass Arc */}
-        <path
-          d="M 28 32 Q 50 36 72 32 Q 50 30 28 32"
-          fill="rgba(255, 255, 255, 0.28)"
-        />
-
-        {/* Expressive Glowing Cyan LED Eyes */}
-        <g className="animate-robot-blink">
-          <rect x="33" y="42" width="10" height="11" rx="5" fill="#38bdf8" filter="url(#dcGlow)" />
-          <rect x="57" y="42" width="10" height="11" rx="5" fill="#38bdf8" filter="url(#dcGlow)" />
-        </g>
-
-        {/* Medical Intelligence Forehead Sensor */}
-        <path
-          d="M 50 21 L 50 26 M 47.5 23.5 L 52.5 23.5"
-          stroke="#38bdf8"
-          strokeWidth="2"
-          strokeLinecap="round"
-          filter="url(#dcGlow)"
-        />
-      </svg>
+      <img
+        src={medoDoctorImg}
+        alt="Dr. Medo AI"
+        className="w-full h-full object-cover object-top select-none pointer-events-none"
+        onError={(e) => {
+          e.target.src = '/medo-doctor.jpg';
+        }}
+      />
     </div>
   );
 };
 
+export const MedoAvatar = DiaCareAvatar;
 
-/* ─── Main Medo AI Chatbot Component ─── */
+/**
+ * ═══════════════════════════════════════════════════════════════════
+ * Main Moveable Dr. Medo AI Chatbot & Clinical Assistant Pod
+ * ═══════════════════════════════════════════════════════════════════
+ */
 const DiaCareChatbot = ({ fullPage = false }) => {
   const [isOpen, setIsOpen] = useState(fullPage);
   const [showReportDetails, setShowReportDetails] = useState(false);
@@ -130,7 +49,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "👋 Hello! I am **Medo**, your Intelligent Diabetes Health Assistant.\n\nYou can ask me anything about diabetes nutrition (especially **Indian foods & balanced meals**), medications, symptoms, or **upload your lab report** (PDF or image) for a structured breakdown.\n\n*Note: I provide educational guidance and do not replace your doctor's clinical diagnosis.*",
+      text: "👋 Hello! I am **Dr. Medo**, your Intelligent Healthcare & Diabetes Assistant.\n\nI can help you with:\n• **Clinical Diagnoses & Evaluation:** Reviewing your fasting glucose, HbA1c, or lab biomarkers.\n• **Personalized Medical Advice:** Target setting, complication screening, and hypoglycemia protocols.\n• **Structured Treatment Plans:** Medical Nutrition Therapy (Indian plate method), GLUT4 exercise, and medication overviews.\n• **Lab Report Analysis:** Upload your laboratory PDF or image for an instant structured breakdown!\n\n*Note: I provide evidence-based educational guidance aligned with ADA 2024 & ICMR guidelines to support you and your doctor.*",
       time: 'Just now'
     }
   ]);
@@ -141,6 +60,19 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   const [reportAnalysis, setReportAnalysis] = useState(null);
   const [reportError, setReportError] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
+
+  // Moveable / Draggable Positions (Can be placed anywhere on the dashboard)
+  const [floatingPos, setFloatingPos] = useState(null);
+  const [podPos, setPodPos] = useState(null);
+
+  const isDraggingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const initialPosRef = useRef({ x: 0, y: 0 });
+  const hasMovedRef = useRef(false);
+
+  const podDraggingRef = useRef(false);
+  const podDragStartRef = useRef({ x: 0, y: 0 });
+  const podInitialPosRef = useRef({ x: 0, y: 0 });
 
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -171,7 +103,139 @@ const DiaCareChatbot = ({ fullPage = false }) => {
     };
   }, [fullPage]);
 
+  // Handle window resize to clamp positions
+  useEffect(() => {
+    const handleResize = () => {
+      if (floatingPos) {
+        setFloatingPos((prev) => {
+          if (!prev) return prev;
+          return {
+            x: Math.min(prev.x, window.innerWidth - 80),
+            y: Math.min(prev.y, window.innerHeight - 80),
+          };
+        });
+      }
+      if (podPos) {
+        setPodPos((prev) => {
+          if (!prev) return prev;
+          return {
+            x: Math.min(prev.x, window.innerWidth - 480),
+            y: Math.min(prev.y, window.innerHeight - 640),
+          };
+        });
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [floatingPos, podPos]);
+
+  // ─────────────────────────────────────────────────────────────
+  // DRAG LOGIC FOR FLOATING LAUNCHER BUTTON
+  // ─────────────────────────────────────────────────────────────
+  const handleLauncherPointerDown = (e) => {
+    if (e.button && e.button !== 0) return; // Only primary click
+
+    isDraggingRef.current = true;
+    hasMovedRef.current = false;
+    const clientX = e.clientX ?? (e.touches && e.touches[0].clientX) ?? 0;
+    const clientY = e.clientY ?? (e.touches && e.touches[0].clientY) ?? 0;
+
+    dragStartRef.current = { x: clientX, y: clientY };
+
+    let curX = floatingPos ? floatingPos.x : (window.innerWidth - 90);
+    let curY = floatingPos ? floatingPos.y : (window.innerHeight - 100);
+    initialPosRef.current = { x: curX, y: curY };
+
+    const handlePointerMove = (moveEvt) => {
+      if (!isDraggingRef.current) return;
+      const curX = moveEvt.clientX ?? (moveEvt.touches && moveEvt.touches[0].clientX) ?? 0;
+      const curY = moveEvt.clientY ?? (moveEvt.touches && moveEvt.touches[0].clientY) ?? 0;
+
+      const deltaX = curX - dragStartRef.current.x;
+      const deltaY = curY - dragStartRef.current.y;
+
+      if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
+        hasMovedRef.current = true;
+      }
+
+      const newX = Math.min(Math.max(12, initialPosRef.current.x + deltaX), window.innerWidth - 76);
+      const newY = Math.min(Math.max(12, initialPosRef.current.y + deltaY), window.innerHeight - 76);
+
+      setFloatingPos({ x: newX, y: newY });
+    };
+
+    const handlePointerUp = () => {
+      isDraggingRef.current = false;
+      window.removeEventListener('mousemove', handlePointerMove);
+      window.removeEventListener('mouseup', handlePointerUp);
+      window.removeEventListener('touchmove', handlePointerMove);
+      window.removeEventListener('touchend', handlePointerUp);
+
+      // If user tapped/clicked without dragging, open chatbot!
+      if (!hasMovedRef.current) {
+        setIsOpen(true);
+      }
+    };
+
+    window.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('mouseup', handlePointerUp);
+    window.addEventListener('touchmove', handlePointerMove, { passive: false });
+    window.addEventListener('touchend', handlePointerUp);
+  };
+
+  // ─────────────────────────────────────────────────────────────
+  // DRAG LOGIC FOR OPEN CHAT POD HEADER
+  // ─────────────────────────────────────────────────────────────
+  const handlePodHeaderPointerDown = (e) => {
+    if (e.target.closest('button') || e.target.closest('input')) return;
+    if (e.button && e.button !== 0) return;
+    if (fullPage) return;
+
+    podDraggingRef.current = true;
+    const clientX = e.clientX ?? (e.touches && e.touches[0].clientX) ?? 0;
+    const clientY = e.clientY ?? (e.touches && e.touches[0].clientY) ?? 0;
+
+    podDragStartRef.current = { x: clientX, y: clientY };
+
+    const chatWidth = Math.min(470, window.innerWidth - 24);
+    const chatHeight = Math.min(650, window.innerHeight - 24);
+
+    let curX = podPos ? podPos.x : (window.innerWidth - chatWidth - 24);
+    let curY = podPos ? podPos.y : (window.innerHeight - chatHeight - 24);
+    podInitialPosRef.current = { x: Math.max(12, curX), y: Math.max(12, curY) };
+
+    const handleHeaderMove = (moveEvt) => {
+      if (!podDraggingRef.current) return;
+      const curX = moveEvt.clientX ?? (moveEvt.touches && moveEvt.touches[0].clientX) ?? 0;
+      const curY = moveEvt.clientY ?? (moveEvt.touches && moveEvt.touches[0].clientY) ?? 0;
+
+      const deltaX = curX - podDragStartRef.current.x;
+      const deltaY = curY - podDragStartRef.current.y;
+
+      const newX = Math.min(Math.max(10, podInitialPosRef.current.x + deltaX), window.innerWidth - chatWidth - 10);
+      const newY = Math.min(Math.max(10, podInitialPosRef.current.y + deltaY), window.innerHeight - chatHeight - 10);
+
+      setPodPos({ x: newX, y: newY });
+    };
+
+    const handleHeaderUp = () => {
+      podDraggingRef.current = false;
+      window.removeEventListener('mousemove', handleHeaderMove);
+      window.removeEventListener('mouseup', handleHeaderUp);
+      window.removeEventListener('touchmove', handleHeaderMove);
+      window.removeEventListener('touchend', handleHeaderUp);
+    };
+
+    window.addEventListener('mousemove', handleHeaderMove);
+    window.addEventListener('mouseup', handleHeaderUp);
+    window.addEventListener('touchmove', handleHeaderMove, { passive: false });
+    window.addEventListener('touchend', handleHeaderUp);
+  };
+
   const quickPrompts = [
+    { label: '🩺 Clinical Diagnoses', query: 'What are the exact diagnostic criteria and thresholds for Pre-Diabetes and Type 2 Diabetes according to ADA 2024?' },
+    { label: '💡 Medical Advice Targets', query: 'What personalized glycemic targets, complication screenings, and lifestyle advice should I follow?' },
+    { label: '📋 Comprehensive Treatment Plan', query: 'Can you provide a structured diabetes treatment plan covering medical nutrition therapy, GLUT4 exercise, and medication overviews?' },
     { label: '🥗 Indian Food Guide', query: 'What are the best Indian foods, dals, and vegetables for managing diabetes?' },
     { label: '🍚 Can I Eat Rice?', query: 'Can people with high blood sugar eat rice, and what are healthier alternatives?' },
     { label: '🩸 HbA1c vs Glucose', query: 'What is the exact difference between an HbA1c test and a fasting blood glucose test?' },
@@ -258,7 +322,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
       const botMsg = {
         id: Date.now().toString(),
         sender: 'assistant',
-        text: `📄 **Report Analyzed Successfully!**\n\nI reviewed **${file.name}** and extracted **${res.analysis.extracted_parameters?.length || 0} biomarkers**.\n\n**Summary:** ${res.analysis.overall_summary}\n\nYou can ask me specific questions about your results below!`,
+        text: `📄 **Report Analyzed Successfully by Dr. Medo!**\n\nI reviewed **${file.name}** and extracted **${res.analysis.extracted_parameters?.length || 0} biomarkers**.\n\n**Summary:** ${res.analysis.overall_summary}\n\nYou can ask me specific questions about your clinical diagnosis, medical advice, or treatment plan below!`,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages((prev) => [...prev, botMsg]);
@@ -273,7 +337,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
     setMessages([{
       id: Date.now().toString(),
       sender: 'assistant',
-      text: "Conversation cleared. How can I help you with your diabetes health today?",
+      text: "Conversation cleared. How can Dr. Medo help you with your clinical diagnosis, medical advice, or treatment plan today?",
       time: 'Just now'
     }]);
     setReportAnalysis(null);
@@ -282,66 +346,98 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   };
 
   // ─────────────────────────────────────────────────────────────
-  // 1. STYLISH GLASSY FLOATING ACTION BUTTON (COMPACT 3D AI ORB)
+  // 1. MOVEABLE DR. MEDO FLOATING LAUNCHER (3D DOCTOR AVATAR)
   // ─────────────────────────────────────────────────────────────
   if (!isOpen && !fullPage) {
+    const launcherStyle = floatingPos
+      ? { left: `${floatingPos.x}px`, top: `${floatingPos.y}px`, position: 'fixed' }
+      : { right: '1.5rem', bottom: '1.5rem', position: 'fixed' };
+
     return (
-      <aside aria-label="Medo AI Assistant trigger" className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex items-center group">
-        {/* Slide-out Glassy Tooltip on Hover */}
-        <div className="hidden sm:flex items-center space-x-2 mr-3 px-3.5 py-1.5 rounded-full glass-btn text-white text-xs font-bold shadow-xl opacity-0 translate-x-3 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+      <aside
+        aria-label="Dr. Medo AI Assistant trigger"
+        style={launcherStyle}
+        className="z-50 select-none group touch-none"
+      >
+        {/* Slide-out Tooltip on Hover */}
+        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-btn text-white text-xs font-bold shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
           <Sparkles className="w-3.5 h-3.5 text-sky-300 animate-pulse" />
-          <span>Ask Medo AI</span>
+          <span>Click to Chat • Drag to Move</span>
         </div>
 
-        {/* Floating 3D AI Orb Button */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-[24px] sm:rounded-[26px] flex items-center justify-center glass-btn-primary animate-neon-pulse shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
-          aria-label="Open Medo AI Health Assistant"
+        {/* 3D Dr. Medo Character Capsule Orb */}
+        <div
+          onMouseDown={handleLauncherPointerDown}
+          onTouchStart={handleLauncherPointerDown}
+          className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-indigo-500 to-pink-500 shadow-2xl transition-transform duration-200 hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
+          title="Dr. Medo AI • Click to open, drag anywhere on dashboard"
         >
-          {/* Radial radar beacon wave */}
-          <span className="absolute inset-0 rounded-[24px] sm:rounded-[26px] bg-sky-400 opacity-20 animate-ping pointer-events-none" />
+          {/* Radar beacon wave */}
+          <span className="absolute inset-0 rounded-full bg-sky-400 opacity-20 animate-ping pointer-events-none" />
 
-          {/* 3D Animated Medo Avatar */}
-          <DiaCareAvatar size={38} className="relative z-10 transition-transform duration-300 group-hover:scale-105" />
+          {/* Dr. Medo Image Avatar */}
+          <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/95 shadow-inner bg-slate-900">
+            <img
+              src={medoDoctorImg}
+              alt="Dr. Medo AI"
+              className="w-full h-full object-cover object-top select-none pointer-events-none"
+              onError={(e) => {
+                e.target.src = '/medo-doctor.jpg';
+              }}
+            />
+          </div>
 
-          {/* Live Status indicator dot badge */}
+          {/* Live Heartbeat Indicator Dot */}
           <span className="absolute -top-1 -right-1 flex h-4 w-4 z-20">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-slate-900 shadow-[0_0_10px_#34d399]" />
           </span>
 
-          {/* Futuristic bottom mini-tag */}
-          <span className="absolute -bottom-1 px-1.5 py-0.2 rounded-full bg-slate-900/90 border border-sky-400/50 text-[8px] font-black text-sky-300 tracking-wider uppercase z-20 shadow-md">
-            AI
+          {/* Bottom Medo Tag Badge */}
+          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-slate-900/90 border border-sky-400/60 text-[8px] font-black text-sky-300 tracking-wider uppercase z-20 shadow-md whitespace-nowrap">
+            DR. MEDO
           </span>
-        </button>
+        </div>
       </aside>
     );
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 2. SCULPTED FUTURISTIC CAPSULE CHATBOT POD
+  // 2. SCULPTED MOVEABLE CAPSULE CHATBOT POD
   // ─────────────────────────────────────────────────────────────
+  const podStyle = (!fullPage && podPos)
+    ? { left: `${podPos.x}px`, top: `${podPos.y}px`, position: 'fixed' }
+    : (!fullPage)
+      ? { right: '1.5rem', bottom: '1.5rem', position: 'fixed' }
+      : {};
+
   const containerClasses = fullPage
     ? "bg-white/95 backdrop-blur-2xl rounded-[38px] border border-white/40 shadow-2xl overflow-hidden flex flex-col h-[750px]"
-    : "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[95vw] sm:w-[450px] md:w-[470px] h-[630px] max-h-[86vh] rounded-[38px] rounded-br-[18px] shadow-2xl bg-white/95 backdrop-blur-2xl border border-white/50 flex flex-col overflow-hidden animate-fade-in-up transition-all duration-300";
+    : "z-50 w-[95vw] sm:w-[460px] md:w-[480px] h-[640px] max-h-[88vh] rounded-[38px] rounded-br-[18px] shadow-2xl bg-white/95 backdrop-blur-2xl border border-white/50 flex flex-col overflow-hidden animate-fade-in-up transition-shadow duration-300";
 
   return (
     <div
-      className={containerClasses}
       style={{
+        ...podStyle,
         boxShadow: '0 30px 90px -15px rgba(15, 23, 42, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 45px -5px rgba(99, 102, 241, 0.35)'
       }}
+      className={containerClasses}
     >
-      {/* ─── Sculpted Futuristic Header Dome ─── */}
-      <div className="bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 px-5 py-4 text-white flex items-center justify-between flex-shrink-0 relative overflow-hidden border-b border-white/10 rounded-t-[38px]">
+      {/* ─── Sculpted Moveable Header Dome (Drag to reposition anywhere) ─── */}
+      <div
+        onMouseDown={handlePodHeaderPointerDown}
+        onTouchStart={handlePodHeaderPointerDown}
+        className={`bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 px-5 py-4 text-white flex items-center justify-between flex-shrink-0 relative overflow-hidden border-b border-white/10 rounded-t-[38px] ${
+          fullPage ? '' : 'cursor-grab active:cursor-grabbing select-none'
+        }`}
+        title={fullPage ? undefined : "Drag header to move chat pod anywhere on screen"}
+      >
         {/* Subtle ambient light splash in header */}
         <div className="absolute -top-12 -left-12 w-32 h-32 bg-sky-500/20 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="flex items-center space-x-3 relative z-10">
-          {/* 3D Animated Avatar in Glassy Orb */}
+        <div className="flex items-center space-x-3 relative z-10 pointer-events-none">
+          {/* 3D Dr. Medo Avatar */}
           <div className="relative">
             <DiaCareAvatar size={42} />
           </div>
@@ -349,19 +445,26 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           <div>
             <div className="flex items-center space-x-2">
               <h3 className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-white via-sky-100 to-indigo-200 bg-clip-text text-transparent">
-                Medo AI
+                Dr. Medo AI
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-extrabold uppercase tracking-wider flex items-center shadow-[0_0_10px_rgba(52,211,153,0.3)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1" />
                 Live Gemini 3.5
               </span>
             </div>
-            <p className="text-[10px] text-slate-300 font-medium">Indian Diet • Reports • Education</p>
+            <p className="text-[10px] text-slate-300 font-medium">Diagnoses • Medical Advice • Treatment Plans</p>
           </div>
         </div>
 
-        {/* Action Controls with Glassy Buttons */}
+        {/* Action Controls with Glassy Buttons (Pointer events enabled) */}
         <div className="flex items-center space-x-2 relative z-10">
+          {!fullPage && (
+            <div className="hidden sm:flex items-center text-[10px] text-slate-400 font-semibold mr-1">
+              <Move className="w-3 h-3 mr-1" />
+              <span>Move</span>
+            </div>
+          )}
+
           {/* Hidden File Input */}
           <input
             type="file"
@@ -422,60 +525,49 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           </div>
 
           {showReportDetails && (
-            <div className="p-3 max-h-48 overflow-y-auto space-y-2 border-t border-slate-200/60 bg-white/80">
-              {reportAnalysis.extracted_parameters?.map((p, idx) => (
-                <div
-                  key={idx}
-                  className={`p-2.5 rounded-2xl border text-[11px] transition ${
-                    p.is_abnormal ? 'bg-rose-50/90 border-rose-200 text-rose-950' : 'bg-white border-slate-200 text-slate-800'
-                  }`}
-                >
-                  <div className="flex justify-between font-bold">
-                    <span>{p.parameter_name}</span>
-                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold ${p.is_abnormal ? 'bg-rose-200 text-rose-800' : 'bg-emerald-100 text-emerald-800'}`}>
-                      {p.clinical_status || (p.is_abnormal ? 'Elevated' : 'Normal')}
-                    </span>
+            <div className="p-4 space-y-3 max-h-56 overflow-y-auto border-t border-slate-200/60 bg-white/70">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {reportAnalysis.extracted_parameters?.map((p, idx) => (
+                  <div key={idx} className="p-2.5 rounded-xl border border-slate-200/80 bg-white">
+                    <div className="flex justify-between items-start">
+                      <span className="font-bold text-slate-900">{p.parameter_name}</span>
+                      <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-md ${p.is_abnormal ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800'}`}>
+                        {p.clinical_status || (p.is_abnormal ? 'Abnormal' : 'Normal')}
+                      </span>
+                    </div>
+                    <p className="font-mono text-sm font-bold text-indigo-700 mt-1">
+                      {p.extracted_value} <span className="text-xs font-normal text-slate-500">{p.unit}</span>
+                    </p>
+                    <p className="text-[10px] text-slate-500 mt-1">{p.layperson_explanation}</p>
                   </div>
-                  <div className="mt-1 text-slate-600">
-                    <strong className="text-slate-900 text-sm">{p.extracted_value}</strong> {p.unit}
-                    {p.reference_range && <span className="text-slate-400 ml-2">(Ref: {p.reference_range})</span>}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </div>
       )}
 
-      {/* ─── Messages Feed ─── */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-gradient-to-b from-slate-50/60 via-white/80 to-slate-50/60">
+      {/* ─── Chat Messages Stream ─── */}
+      <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50">
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`flex items-start space-x-2.5 ${m.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
+            className={`flex items-start space-x-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            {m.sender === 'user' ? (
-              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md text-xs font-bold flex-shrink-0">
-                👤
-              </div>
-            ) : m.is_emergency ? (
-              <div className="w-7 h-7 rounded-full bg-rose-600 flex items-center justify-center text-white shadow-md text-xs font-bold flex-shrink-0">
-                🚨
-              </div>
-            ) : (
-              <DiaCareAvatar size={28} className="flex-shrink-0" />
+            {m.sender === 'assistant' && (
+              <DiaCareAvatar size={30} className="flex-shrink-0 mt-0.5" />
             )}
 
             <div
-              className={`max-w-[84%] rounded-3xl p-3.5 text-xs leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[85%] rounded-2xl p-3.5 text-xs leading-relaxed ${
                 m.sender === 'user'
-                  ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-500/20'
+                  ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-md'
                   : m.is_emergency
                     ? 'bg-rose-50 border border-rose-300 text-rose-950 font-medium'
                     : 'bg-white border border-slate-200/80 text-slate-800 shadow-sm'
               }`}
             >
-              <p>{m.text}</p>
+              <div className="whitespace-pre-line">{m.text}</div>
 
               {m.citations && m.citations.length > 0 && (
                 <div className="mt-2.5 pt-2 border-t border-slate-200/60 text-[10px] text-slate-500">
@@ -500,7 +592,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce [animation-delay:0.2s]" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce [animation-delay:0.4s]" />
-            <span className="text-[11px] font-medium text-slate-500 ml-1">Medo AI is typing...</span>
+            <span className="text-[11px] font-medium text-slate-500 ml-1">Dr. Medo AI is reviewing...</span>
           </div>
         )}
 
@@ -532,7 +624,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Medo about diet, blood sugar, reports..."
+            placeholder="Ask Dr. Medo about diagnoses, advice, treatment plans..."
             disabled={loading}
             className="flex-1 px-4 py-1.5 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
           />
@@ -550,5 +642,4 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   );
 };
 
-export const MedoAvatar = DiaCareAvatar;
 export default DiaCareChatbot;
