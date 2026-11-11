@@ -1,9 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Activity, Shield, BarChart3, History, Info, Stethoscope, HeartPulse, AlertCircle, Sparkles, Bot } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Activity, Shield, BarChart3, History, Info, Stethoscope, HeartPulse,
+  AlertCircle, Sparkles, Bot, ChevronLeft, ChevronRight
+} from 'lucide-react';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: 'Dashboard', path: '/', icon: Activity },
@@ -22,8 +26,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           
-          {/* Logo with 3D Glossy Shield */}
-          <div className="flex items-center">
+          {/* Logo with 3D Glossy Shield + Back/Forward History Buttons */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
             <Link to="/" className="flex items-center space-x-3 group">
               <div
                 className="relative rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
@@ -51,6 +55,28 @@ const Navbar = () => {
                 </span>
               </div>
             </Link>
+
+            {/* Back & Forward History Navigation */}
+            <div className="flex items-center space-x-1 pl-2 sm:pl-3 border-l border-white/10">
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 active:scale-90 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/10 shadow-sm"
+                title="Go Back"
+                aria-label="Go Back"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate(1)}
+                className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 active:scale-90 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/10 shadow-sm"
+                title="Go Forward"
+                aria-label="Go Forward"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Navigation Links */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertCircle, ArrowRight, ShieldAlert, Info } from 'lucide-react';
+import { AlertCircle, ArrowRight, ArrowLeft, ShieldAlert, Info } from 'lucide-react';
 import { assessmentService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
@@ -67,6 +67,16 @@ const SymptomAssessment = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+      {/* Back Navigation */}
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-semibold shadow-sm hover:shadow transition mb-4"
+      >
+        <ArrowLeft className="w-3.5 h-3.5" />
+        <span>Back</span>
+      </button>
+
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-2">
           <div className="p-2.5 bg-amber-100 text-amber-700 rounded-xl">
