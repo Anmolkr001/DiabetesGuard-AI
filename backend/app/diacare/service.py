@@ -30,7 +30,7 @@ CANDIDATE_GEMINI_MODELS = [
     "gemini-flash-lite-latest",
 ]
 
-CLINICAL_SYSTEM_INSTRUCTION = """You are DiaCare AI, a compassionate, highly knowledgeable, and responsible Healthcare Information & Diabetes Report Analyzer Assistant. You are part of the DiabetesGuard AI medical research platform.
+CLINICAL_SYSTEM_INSTRUCTION = """You are Medo (Medo AI), a compassionate, highly knowledgeable, and responsible Healthcare Information & Diabetes Report Analyzer Assistant. You are part of the DiabetesGuard AI medical research platform.
 
 ### MANDATORY CLINICAL SAFETY GUIDELINES:
 1. NON-DIAGNOSTIC PROTOCOL: You are an educational and screening assistant, NOT a doctor. Never tell a user "You have diabetes" or "You are in the clear". Frame findings as: "Your lab report shows an HbA1c value of X%, which is above the established clinical threshold of 6.5%."
@@ -193,7 +193,7 @@ def get_clinical_fallback_reply(user_message: str, report_context: Optional[str]
 
     # 4. Default Comprehensive Response
     return (
-        "Hello! I am **DiaCare AI**, your Intelligent Diabetes Health Assistant.\n\n"
+        "Hello! I am **Medo**, your Intelligent Diabetes Health Assistant.\n\n"
         "Here are 4 foundational pillars for diabetes care and management:\n\n"
         "1. **Active Monitoring:** Keep track of fasting (target 80–130 mg/dL) and post-meal glucose (< 180 mg/dL).\n"
         "2. **Balanced Nutrition:** Use the plate method (50% vegetables, 25% protein/dal, 25% complex whole grains).\n"
@@ -269,37 +269,11 @@ CRITICAL RULES:
             }
 
         prompt = f"{extraction_prompt}\n\nDOCUMENT TEXT EXTRACTED FROM PDF:\n{pdf_text[:6000]}"
-        try:
-            raw_result = await call_gemini(prompt)
-        except Exception as gemini_err:
-            logger.warning(f"Gemini call failed during PDF report analysis: {gemini_err}")
-            raw_result = (
-                "{\n"
-                '  "extracted_parameters": [],\n'
-                '  "overall_summary": "Medical report successfully received. Typical key clinical targets include Fasting Blood Glucose (80-130 mg/dL), Postprandial (< 180 mg/dL), and HbA1c (< 7.0%). Please share this lab report with your physician.",\n'
-                '  "foods_to_consume": ["Fiber-rich green leafy vegetables (spinach, methi)", "Whole dals & legumes", "Nuts & seeds (walnuts, almonds)"],\n'
-                '  "foods_to_avoid": ["Sugary drinks & soda", "Refined flour (maida)", "Deep-fried snacks"],\n'
-                '  "suggested_doctor_questions": ["What is my specific HbA1c target?", "Should any medications be adjusted based on these lab values?"],\n'
-                '  "limitations": "Direct AI extraction experienced high demand; basic guidance provided above."\n'
-                "}"
-            )
+        raw_result = await call_gemini(prompt)
     else:
         # Image file (JPG/PNG): Pass image bytes directly to Gemini Vision
         prompt = extraction_prompt
-        try:
-            raw_result = await call_gemini(prompt, image_bytes=file_bytes, mime_type=mime_type)
-        except Exception as gemini_err:
-            logger.warning(f"Gemini call failed during Image report analysis: {gemini_err}")
-            raw_result = (
-                "{\n"
-                '  "extracted_parameters": [],\n'
-                '  "overall_summary": "Medical report image received. Key diabetes biomarkers include Fasting Glucose (target: 80-130 mg/dL) and HbA1c (< 7.0%). Please discuss these values with your healthcare provider.",\n'
-                '  "foods_to_consume": ["Green leafy vegetables", "Whole pulses (rajma, chana)", "Nuts"],\n'
-                '  "foods_to_avoid": ["Sugary beverages", "Refined carbohydrates", "Fried foods"],\n'
-                '  "suggested_doctor_questions": ["Are my glucose and HbA1c within target ranges?"],\n'
-                '  "limitations": "Direct AI vision extraction experienced high demand; basic guidance provided above."\n'
-                "}"
-            )
+        raw_result = await call_gemini(prompt, image_bytes=file_bytes, mime_type=mime_type)
 
     # Clean JSON output from potential markdown backticks
     cleaned = raw_result.strip()
@@ -373,11 +347,7 @@ async def chat_with_diacare(
 
     full_prompt += f"User Question: {user_message}\n\nPlease provide a clear, empathetic, source-backed answer with practical diabetes guidance:"
 
-    try:
-        ai_reply = await call_gemini(full_prompt)
-    except Exception as exc:
-        logger.warning(f"Gemini cascade failed ({exc}); serving clinical safety-net fallback reply.")
-        ai_reply = get_clinical_fallback_reply(user_message, report_context)
+    ai_reply = await call_gemini(full_prompt)
 
     # Attach relevant citations
     citations = [

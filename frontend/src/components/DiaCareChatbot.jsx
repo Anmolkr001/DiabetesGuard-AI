@@ -7,7 +7,7 @@ import {
 import { diacareService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
-/* ─── Custom High-Tech 3D DiaCare AI Avatar ─── */
+/* ─── Custom High-Tech 3D Medo AI Avatar ─── */
 export const DiaCareAvatar = ({ size = 36, className = '' }) => {
   return (
     <div
@@ -122,7 +122,7 @@ export const DiaCareAvatar = ({ size = 36, className = '' }) => {
 };
 
 
-/* ─── Main DiaCare AI Chatbot Component ─── */
+/* ─── Main Medo AI Chatbot Component ─── */
 const DiaCareChatbot = ({ fullPage = false }) => {
   const [isOpen, setIsOpen] = useState(fullPage);
   const [showReportDetails, setShowReportDetails] = useState(false);
@@ -130,7 +130,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "👋 Hello! I am **DiaCare AI**, your Intelligent Diabetes Health Assistant.\n\nYou can ask me anything about diabetes nutrition (especially **Indian foods & balanced meals**), medications, symptoms, or **upload your lab report** (PDF or image) for a structured breakdown.\n\n*Note: I provide educational guidance and do not replace your doctor's clinical diagnosis.*",
+      text: "👋 Hello! I am **Medo**, your Intelligent Diabetes Health Assistant.\n\nYou can ask me anything about diabetes nutrition (especially **Indian foods & balanced meals**), medications, symptoms, or **upload your lab report** (PDF or image) for a structured breakdown.\n\n*Note: I provide educational guidance and do not replace your doctor's clinical diagnosis.*",
       time: 'Just now'
     }
   ]);
@@ -152,6 +152,8 @@ const DiaCareChatbot = ({ fullPage = false }) => {
 
     window.addEventListener('open-diacare', handleOpen);
     window.addEventListener('close-diacare', handleClose);
+    window.addEventListener('open-medo', handleOpen);
+    window.addEventListener('close-medo', handleClose);
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && !fullPage) {
@@ -163,6 +165,8 @@ const DiaCareChatbot = ({ fullPage = false }) => {
     return () => {
       window.removeEventListener('open-diacare', handleOpen);
       window.removeEventListener('close-diacare', handleClose);
+      window.removeEventListener('open-medo', handleOpen);
+      window.removeEventListener('close-medo', handleClose);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [fullPage]);
@@ -282,23 +286,23 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   // ─────────────────────────────────────────────────────────────
   if (!isOpen && !fullPage) {
     return (
-      <aside aria-label="DiaCare AI Assistant trigger" className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex items-center group">
+      <aside aria-label="Medo AI Assistant trigger" className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex items-center group">
         {/* Slide-out Glassy Tooltip on Hover */}
         <div className="hidden sm:flex items-center space-x-2 mr-3 px-3.5 py-1.5 rounded-full glass-btn text-white text-xs font-bold shadow-xl opacity-0 translate-x-3 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
           <Sparkles className="w-3.5 h-3.5 text-sky-300 animate-pulse" />
-          <span>Ask DiaCare AI</span>
+          <span>Ask Medo AI</span>
         </div>
 
         {/* Floating 3D AI Orb Button */}
         <button
           onClick={() => setIsOpen(true)}
           className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-[24px] sm:rounded-[26px] flex items-center justify-center glass-btn-primary animate-neon-pulse shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
-          aria-label="Open DiaCare AI Health Assistant"
+          aria-label="Open Medo AI Health Assistant"
         >
           {/* Radial radar beacon wave */}
           <span className="absolute inset-0 rounded-[24px] sm:rounded-[26px] bg-sky-400 opacity-20 animate-ping pointer-events-none" />
 
-          {/* 3D Animated DiaCare Avatar */}
+          {/* 3D Animated Medo Avatar */}
           <DiaCareAvatar size={38} className="relative z-10 transition-transform duration-300 group-hover:scale-105" />
 
           {/* Live Status indicator dot badge */}
@@ -345,7 +349,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           <div>
             <div className="flex items-center space-x-2">
               <h3 className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-white via-sky-100 to-indigo-200 bg-clip-text text-transparent">
-                DiaCare AI
+                Medo AI
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-extrabold uppercase tracking-wider flex items-center shadow-[0_0_10px_rgba(52,211,153,0.3)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1" />
@@ -392,7 +396,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             <button
               onClick={() => setIsOpen(false)}
               className="glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-300 hover:text-rose-300 hover:border-rose-400/50 cursor-pointer"
-              title="Close DiaCare AI"
+              title="Close Medo AI"
             >
               <X className="w-4 h-4" />
             </button>
@@ -496,7 +500,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce [animation-delay:0.2s]" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce [animation-delay:0.4s]" />
-            <span className="text-[11px] font-medium text-slate-500 ml-1">DiaCare AI is typing...</span>
+            <span className="text-[11px] font-medium text-slate-500 ml-1">Medo AI is typing...</span>
           </div>
         )}
 
@@ -528,7 +532,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask DiaCare about diet, blood sugar, reports..."
+            placeholder="Ask Medo about diet, blood sugar, reports..."
             disabled={loading}
             className="flex-1 px-4 py-1.5 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
           />
@@ -546,4 +550,5 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   );
 };
 
+export const MedoAvatar = DiaCareAvatar;
 export default DiaCareChatbot;

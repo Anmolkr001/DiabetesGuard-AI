@@ -13,7 +13,7 @@ const DiaCarePage = () => {
             <span>AI-Powered Medical Report Analyzer & Diabetes Educator</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            DiaCare AI Health Assistant
+            Medo AI Health Assistant
           </h1>
           <p className="mt-2 text-sm text-slate-300 leading-relaxed">
             Upload your laboratory blood reports (PDF, JPG, PNG) for instant biomarker extraction, or chat directly to learn about culturally relevant Indian nutrition, physical exercise (GLUT4 activation), and diabetes management.

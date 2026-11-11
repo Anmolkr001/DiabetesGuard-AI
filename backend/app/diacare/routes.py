@@ -35,7 +35,7 @@ async def chat_endpoint(payload: ChatPayload):
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"DiaCare AI Assistant encountered an error: {str(e)}"
+            detail=f"Medo AI Assistant encountered an error: {str(e)}"
         )
 
 
@@ -79,9 +79,9 @@ async def analyze_report_endpoint(file: UploadFile = File(...)):
 @router.get("/health")
 def diacare_health():
     return {
-        "service": "DiaCare AI Assistant",
+        "service": "Medo AI Assistant",
         "status": "online",
-        "model": "gemini-3.5-flash-lite",
+        "model": "gemini-3.5-flash",
         "supported_formats": [".pdf", ".jpg", ".jpeg", ".png"]
     }
 

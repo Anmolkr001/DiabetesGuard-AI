@@ -83,14 +83,17 @@ const Dashboard = () => {
             </GlassButton>
 
             <GlassButton
-              onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('open-medo'));
+                window.dispatchEvent(new CustomEvent('open-diacare'));
+              }}
               variant="default"
               size="md"
               className="rounded-xl font-bold border-sky-400/40 hover:border-sky-300 shadow-md text-sky-100"
-              title="Ask DiaCare AI Medical Assistant"
+              title="Ask Medo AI Medical Assistant"
             >
               <DiaCareAvatar size={18} className="mr-2" />
-              <span>Ask DiaCare AI</span>
+              <span>Ask Medo AI</span>
               <span className="ml-2 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
             </GlassButton>
           </div>

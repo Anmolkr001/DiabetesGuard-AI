@@ -387,11 +387,14 @@ const LandingPage = () => {
             </Link>
             <button
               type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('open-medo'));
+                window.dispatchEvent(new CustomEvent('open-diacare'));
+              }}
               className="glass-btn group relative inline-flex items-center px-7 py-3.5 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300 hover:border-sky-300/60 cursor-pointer"
             >
               <DiaCareAvatar size={24} className="mr-2.5" />
-              <span>Ask DiaCare AI</span>
+              <span>Ask Medo AI</span>
               <span className="ml-2 w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
             </button>
             <Link

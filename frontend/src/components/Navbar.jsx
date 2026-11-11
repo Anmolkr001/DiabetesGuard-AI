@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Activity, Shield, BarChart3, History, Info, Stethoscope, HeartPulse,
-  AlertCircle, ChevronLeft, ChevronRight, Menu, X, Sparkles
+  Activity, Shield, History, Info, Stethoscope, HeartPulse,
+  AlertCircle, ChevronLeft, ChevronRight, Menu, X
 } from 'lucide-react';
-import { DiaCareAvatar } from './DiaCareChatbot';
 
 /**
  * ═══════════════════════════════════════════════════════════════════
@@ -12,7 +11,6 @@ import { DiaCareAvatar } from './DiaCareChatbot';
  * ═══════════════════════════════════════════════════════════════════
  * Features:
  * - Jewel-tone chromatic button system (each tab has unique neon identity)
- * - Holographic Cyber Aurora DiaCare AI pill with animated live beacon
  * - Specular crystal Back & Forward navigation buttons
  * - Flowing rainbow chromatic hairline glow on bottom edge
  * - Responsive mobile menu drawer with identical chromatic styling
@@ -66,15 +64,6 @@ const Navbar = () => {
       iconColor: 'text-purple-400',
     },
     {
-      name: 'Model Analytics',
-      tag: 'SHAP',
-      path: '/analytics',
-      icon: BarChart3,
-      tabClass: 'nav-tab-pink',
-      iconColor: 'text-pink-400',
-      badgeClass: 'bg-pink-500/25 text-pink-200 border-pink-400/40',
-    },
-    {
       name: 'About & Research',
       path: '/about',
       icon: Info,
@@ -88,11 +77,6 @@ const Navbar = () => {
       return location.pathname === '/' || location.pathname === '/dashboard';
     }
     return location.pathname === path;
-  };
-
-  const handleOpenDiaCare = () => {
-    window.dispatchEvent(new CustomEvent('open-diacare'));
-    setMobileMenuOpen(false);
   };
 
   return (
@@ -166,7 +150,7 @@ const Navbar = () => {
           </div>
 
           {/* ─── 2. Desktop Navigation (Jewel-Tone Chromatic Tabs) ─── */}
-          <nav className="hidden lg:flex items-center space-x-1.5" aria-label="Main Navigation">
+          <nav className="hidden lg:flex items-center space-x-2" aria-label="Main Navigation">
             {navTabs.map((tab) => {
               const active = isLinkActive(tab.path);
               const Icon = tab.icon;
@@ -197,31 +181,6 @@ const Navbar = () => {
                 </Link>
               );
             })}
-
-            {/* Special Holographic Cyber Aurora DiaCare AI Button */}
-            <button
-              type="button"
-              onClick={handleOpenDiaCare}
-              className="nav-diacare-aurora ml-2 group"
-              title="Open DiaCare AI Medical Assistant"
-              aria-label="Open DiaCare AI Medical Assistant"
-            >
-              {/* Shimmer reflection sweep */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none rounded-xl" />
-
-              <DiaCareAvatar size={18} className="mr-1.5 transition-transform duration-300 group-hover:rotate-6 drop-shadow" />
-              <span className="font-extrabold tracking-wide drop-shadow-sm text-xs">DiaCare AI</span>
-
-              {/* Live pulsing glowing emerald beacon */}
-              <span className="relative flex h-2 w-2 ml-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-              </span>
-
-              <span className="ml-1.5 text-[8.5px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md bg-white/20 text-white border border-white/30 backdrop-blur-sm shadow-sm">
-                3.5
-              </span>
-            </button>
           </nav>
 
           {/* ─── 3. Medium Screens (Condensed Chromatic View) ─── */}
@@ -247,17 +206,6 @@ const Navbar = () => {
 
             <button
               type="button"
-              onClick={handleOpenDiaCare}
-              className="nav-diacare-aurora px-2.5 py-1 text-xs"
-              title="Open DiaCare AI"
-            >
-              <DiaCareAvatar size={16} className="mr-1" />
-              <span>AI</span>
-              <span className="w-1.5 h-1.5 ml-1 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
-            </button>
-
-            <button
-              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/[0.08] hover:bg-white/15 border border-white/15 text-slate-200 hover:text-white transition cursor-pointer"
               aria-label="Toggle Navigation Drawer"
@@ -268,17 +216,6 @@ const Navbar = () => {
 
           {/* ─── 4. Mobile Screen Controls (< md) ─── */}
           <div className="flex md:hidden items-center space-x-1.5">
-            <button
-              type="button"
-              onClick={handleOpenDiaCare}
-              className="nav-diacare-aurora px-2.5 py-1 text-xs"
-              aria-label="Open DiaCare AI Assistant"
-            >
-              <DiaCareAvatar size={16} className="mr-1" />
-              <span>AI</span>
-              <span className="w-1.5 h-1.5 ml-1 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
-            </button>
-
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -330,20 +267,6 @@ const Navbar = () => {
                 </Link>
               );
             })}
-
-            {/* Mobile DiaCare AI CTA Button */}
-            <button
-              type="button"
-              onClick={handleOpenDiaCare}
-              className="nav-diacare-aurora w-full justify-center py-2.5 px-4 text-xs font-bold mt-2"
-            >
-              <DiaCareAvatar size={20} className="mr-2" />
-              <span>Open DiaCare AI Medical Assistant</span>
-              <span className="relative flex h-2 w-2 ml-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-              </span>
-            </button>
           </div>
         </div>
       )}
