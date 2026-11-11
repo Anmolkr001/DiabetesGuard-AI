@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, Stethoscope, HeartPulse, AlertCircle, History, BarChart3, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Activity, Stethoscope, HeartPulse, AlertCircle, History, BarChart3, ArrowRight, ShieldCheck, Bot, Sparkles, FileText } from 'lucide-react';
 import { assessmentService } from '../services/api';
+import DiaCareChatbot from '../components/DiaCareChatbot';
 
 const Dashboard = () => {
   const [history, setHistory] = useState([]);
@@ -52,6 +53,13 @@ const Dashboard = () => {
             >
               Start Lifestyle Survey
             </Link>
+            <a
+              href="#diacare-chat"
+              className="px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 rounded-xl text-xs font-semibold shadow-md shadow-indigo-500/30 transition flex items-center space-x-1.5"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span>Ask DiaCare AI / Upload Report</span>
+            </a>
           </div>
         </div>
       </div>
@@ -102,6 +110,11 @@ const Dashboard = () => {
             Open Assessment <ArrowRight className="ml-1 w-3.5 h-3.5" />
           </Link>
         </div>
+      </div>
+
+      {/* DiaCare AI Assistant & Lab Report Analyzer */}
+      <div id="diacare-chat" className="scroll-mt-24">
+        <DiaCareChatbot />
       </div>
 
       {/* Recent Assessment Log Preview */}

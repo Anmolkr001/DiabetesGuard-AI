@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.database.session import Base, engine
 from backend.app.routes.api import router as api_router
+from backend.app.diacare.routes import router as diacare_router
 
 # Create database tables if they do not exist
 Base.metadata.create_all(bind=engine)
@@ -33,6 +34,7 @@ app.add_middleware(
 
 # Mount API routes
 app.include_router(api_router, prefix="/api")
+app.include_router(diacare_router, prefix="/api/diacare")
 
 
 @app.get("/api/health")
