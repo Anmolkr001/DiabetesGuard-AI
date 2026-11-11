@@ -141,67 +141,77 @@ const StethoOrb = ({ className = '' }) => (
 /* ─── 3D Converging Title Letters ─── */
 const ConvergingTitle = () => {
   const [animKey, setAnimKey] = useState(0);
+  const [settled, setSettled] = useState(false);
 
-  const word1 = 'DIABETES'.split('');
-  const word2 = 'GUARD'.split('');
+  useEffect(() => {
+    setSettled(false);
+    const timer = setTimeout(() => setSettled(true), 1150);
+    return () => clearTimeout(timer);
+  }, [animKey]);
+
+  const word1Config = [
+    { char: 'D', anim: 'convergeFromLeftWide', delay: 0.04 },
+    { char: 'I', anim: 'convergeFromLeftMid', delay: 0.08 },
+    { char: 'A', anim: 'convergeFromLeftClose', delay: 0.12 },
+    { char: 'B', anim: 'convergeFromLeftClose', delay: 0.16 },
+    { char: 'E', anim: 'convergeFromRightClose', delay: 0.16 },
+    { char: 'T', anim: 'convergeFromRightClose', delay: 0.12 },
+    { char: 'E', anim: 'convergeFromRightMid', delay: 0.08 },
+    { char: 'S', anim: 'convergeFromRightWide', delay: 0.04 },
+  ];
+
+  const word2Config = [
+    { char: 'G', anim: 'convergeFromLeftWide', delay: 0.24 },
+    { char: 'U', anim: 'convergeFromLeftMid', delay: 0.28 },
+    { char: 'A', anim: 'convergeCenterDrop', delay: 0.32 },
+    { char: 'R', anim: 'convergeFromRightMid', delay: 0.28 },
+    { char: 'D', anim: 'convergeFromRightWide', delay: 0.24 },
+  ];
 
   return (
     <div
       key={animKey}
       onClick={() => setAnimKey((k) => k + 1)}
       className="cursor-pointer select-none group relative py-2"
-      title="Click to replay letter convergence"
+      title="Click title to replay assembly"
       style={{ perspective: '1400px' }}
     >
-      <h1 className="text-[3.2rem] sm:text-[4.8rem] md:text-[6.2rem] lg:text-[7.6rem] font-black leading-[0.9] tracking-tighter">
+      <h1 className="text-[3.4rem] sm:text-[5rem] md:text-[6.5rem] lg:text-[7.8rem] font-black leading-[0.9] tracking-tighter">
         {/* ROW 1: DIABETES */}
-        <div className="flex justify-center items-center overflow-visible animate-converge-row-left">
-          {word1.map((char, index) => {
-            const fromLeft = index % 2 === 0;
-            const delay = 0.12 + index * 0.07;
-            return (
-              <span
-                key={`w1-${index}`}
-                className="inline-block transform-gpu text-white transition-transform duration-300 group-hover:scale-105"
-                style={{
-                  animation: `${fromLeft ? 'letterFromLeft' : 'letterFromRight'} 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s both`,
-                  textShadow: '0 4px 30px rgba(99,102,241,0.35), 0 0 70px rgba(99,102,241,0.2)',
-                  display: 'inline-block',
-                }}
-              >
-                {char}
-              </span>
-            );
-          })}
+        <div className={`flex justify-center items-center overflow-visible ${settled ? '' : 'animate-converge-row-down'}`}>
+          {word1Config.map((item, index) => (
+            <span
+              key={`w1-${index}`}
+              className="inline-block text-white"
+              style={{
+                animation: settled ? 'none' : `${item.anim} 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s both`,
+                textShadow: '0 4px 30px rgba(99,102,241,0.35), 0 0 70px rgba(99,102,241,0.2)',
+                display: 'inline-block',
+              }}
+            >
+              {item.char}
+            </span>
+          ))}
         </div>
 
         {/* ROW 2: GUARD */}
-        <div className="flex justify-center items-center overflow-visible animate-converge-row-right mt-1 sm:mt-2">
-          {word2.map((char, index) => {
-            const fromLeft = index % 2 === 1; // Alternating opposite pattern
-            const delay = 0.28 + index * 0.08;
-            return (
-              <span
-                key={`w2-${index}`}
-                className="inline-block transform-gpu bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent transition-transform duration-300 group-hover:scale-105"
-                style={{
-                  animation: `${fromLeft ? 'letterFromLeft' : 'letterFromRight'} 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s both`,
-                  WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-                  filter: 'drop-shadow(0 4px 20px rgba(56,189,248,0.4))',
-                  display: 'inline-block',
-                }}
-              >
-                {char}
-              </span>
-            );
-          })}
+        <div className={`flex justify-center items-center overflow-visible mt-1 sm:mt-2 ${settled ? '' : 'animate-converge-row-up'}`}>
+          {word2Config.map((item, index) => (
+            <span
+              key={`w2-${index}`}
+              className="inline-block bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent"
+              style={{
+                animation: settled ? 'none' : `${item.anim} 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s both`,
+                WebkitTextStroke: '1px rgba(255,255,255,0.06)',
+                filter: 'drop-shadow(0 4px 20px rgba(56,189,248,0.4))',
+                display: 'inline-block',
+              }}
+            >
+              {item.char}
+            </span>
+          ))}
         </div>
       </h1>
-
-      {/* Subtle replay hint indicator on hover */}
-      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2 text-[10px] uppercase font-bold tracking-widest text-indigo-300/60 flex items-center justify-center space-x-1">
-        <span>⚡ Click title to replay assembly</span>
-      </div>
     </div>
   );
 };
