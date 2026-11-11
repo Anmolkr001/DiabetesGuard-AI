@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-11-09T20:57:39.471072",
+  "phase": "Phase 8 \u2014 Probability Calibration",
+  "dataset": "PIMA",
+  "calibration_metrics": {
+    "Uncalibrated": {
+      "brier_score": 0.1599,
+      "log_loss": 0.4907,
+      "roc_auc": 0.848,
+      "expected_calibration_error": 0.1015
+    },
+    "Sigmoid (Platt)": {
+      "brier_score": 0.1503,
+      "log_loss": 0.462,
+      "roc_auc": 0.8464,
+      "expected_calibration_error": 0.0505
+    },
+    "Isotonic Regression": {
+      "brier_score": 0.1508,
+      "log_loss": 0.5677,
+      "roc_auc": 0.8449,
+      "expected_calibration_error": 0.0327
+    }
+  },
+  "selected_calibration_method": "Sigmoid (Platt)",
+  "clinical_significance": "Uncalibrated probabilities tend to produce overconfident extremes in medical screening. Sigmoid (Platt) calibration lowered the Brier score to 0.1503 and reduced Expected Calibration Error to 0.0505. This ensures that predicted risk percentages genuinely reflect population proportions rather than raw model heuristics.",
+  "guidance_for_frontend": "Do NOT display probabilities as clinical certainties. Use risk bands accompanied by confidence intervals and explainability factors."
+}

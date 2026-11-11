@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-11-09T21:02:08.539784",
+  "dataset": "CDC Diabetes Health Indicators",
+  "total_records": 253680,
+  "train_records": 202944,
+  "test_records": 50736,
+  "class_balance_train": {
+    "0": 174667,
+    "1": 28277
+  },
+  "class_balance_test": {
+    "0": 43667,
+    "1": 7069
+  },
+  "scaled_features": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth"
+  ],
+  "passthrough_features": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "feature_order_out": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income"
+  ]
+}

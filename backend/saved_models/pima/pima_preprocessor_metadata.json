@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-11-09T20:40:05.998540",
+  "dataset": "PIMA",
+  "pipeline_file": "D:\\DiabetesGuard AI \u2014 Master Project Development Prompt\\DiabetesGuard-AI\\backend\\saved_models\\pima\\pima_preprocessor.joblib",
+  "impute_features": [
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI"
+  ],
+  "no_impute_features": [
+    "Pregnancies",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "imputation_strategy": "median",
+  "scaling": "StandardScaler (zero-mean, unit-variance)",
+  "feature_order_out": [
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "Pregnancies",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "leakage_note": "This pipeline was fitted on X_train only. Learned parameters (medians, mean, std) must NOT be recomputed on the full dataset.",
+  "learned_medians": {
+    "Glucose": 117.0,
+    "BloodPressure": 72.0,
+    "SkinThickness": 29.0,
+    "Insulin": 125.0,
+    "BMI": 32.4
+  }
+}

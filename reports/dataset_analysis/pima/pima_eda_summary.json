@@ -1,0 +1,303 @@
+{
+  "generated_at": "2026-11-09T20:39:47.237885",
+  "dataset": "PIMA Indians Diabetes Dataset (Deterministically Cleaned)",
+  "phase": "Phase 2 \u2014 Exploratory Data Analysis",
+  "n_records": 768,
+  "n_features": 8,
+  "target_column": "Outcome",
+  "class_distribution": {
+    "counts": {
+      "0": 500,
+      "1": 268
+    },
+    "percentages": {
+      "0": 65.1,
+      "1": 34.9
+    }
+  },
+  "overall_statistics": {
+    "Pregnancies": {
+      "count": 768.0,
+      "mean": 3.8451,
+      "std": 3.3696,
+      "min": 0.0,
+      "25%": 1.0,
+      "50%": 3.0,
+      "75%": 6.0,
+      "max": 17.0
+    },
+    "Glucose": {
+      "count": 763.0,
+      "mean": 121.6868,
+      "std": 30.5356,
+      "min": 44.0,
+      "25%": 99.0,
+      "50%": 117.0,
+      "75%": 141.0,
+      "max": 199.0
+    },
+    "BloodPressure": {
+      "count": 733.0,
+      "mean": 72.4052,
+      "std": 12.3822,
+      "min": 24.0,
+      "25%": 64.0,
+      "50%": 72.0,
+      "75%": 80.0,
+      "max": 122.0
+    },
+    "SkinThickness": {
+      "count": 541.0,
+      "mean": 29.1534,
+      "std": 10.477,
+      "min": 7.0,
+      "25%": 22.0,
+      "50%": 29.0,
+      "75%": 36.0,
+      "max": 99.0
+    },
+    "Insulin": {
+      "count": 394.0,
+      "mean": 155.5482,
+      "std": 118.7759,
+      "min": 14.0,
+      "25%": 76.25,
+      "50%": 125.0,
+      "75%": 190.0,
+      "max": 846.0
+    },
+    "BMI": {
+      "count": 757.0,
+      "mean": 32.4575,
+      "std": 6.925,
+      "min": 18.2,
+      "25%": 27.5,
+      "50%": 32.3,
+      "75%": 36.6,
+      "max": 67.1
+    },
+    "DiabetesPedigreeFunction": {
+      "count": 768.0,
+      "mean": 0.4719,
+      "std": 0.3313,
+      "min": 0.078,
+      "25%": 0.2438,
+      "50%": 0.3725,
+      "75%": 0.6262,
+      "max": 2.42
+    },
+    "Age": {
+      "count": 768.0,
+      "mean": 33.2409,
+      "std": 11.7602,
+      "min": 21.0,
+      "25%": 24.0,
+      "50%": 29.0,
+      "75%": 41.0,
+      "max": 81.0
+    }
+  },
+  "per_class_statistics": {
+    "0": {
+      "label": "No Diabetes (0)",
+      "n": 500,
+      "mean": {
+        "Pregnancies": 3.298,
+        "Glucose": 110.644,
+        "BloodPressure": 70.877,
+        "SkinThickness": 27.235,
+        "Insulin": 130.288,
+        "BMI": 30.86,
+        "DiabetesPedigreeFunction": 0.43,
+        "Age": 31.19
+      },
+      "std": {
+        "Pregnancies": 3.017,
+        "Glucose": 24.777,
+        "BloodPressure": 12.161,
+        "SkinThickness": 10.026,
+        "Insulin": 102.482,
+        "BMI": 6.561,
+        "DiabetesPedigreeFunction": 0.299,
+        "Age": 11.668
+      },
+      "median": {
+        "Pregnancies": 2.0,
+        "Glucose": 107.0,
+        "BloodPressure": 70.0,
+        "SkinThickness": 27.0,
+        "Insulin": 102.5,
+        "BMI": 30.1,
+        "DiabetesPedigreeFunction": 0.336,
+        "Age": 27.0
+      },
+      "min": {
+        "Pregnancies": 0.0,
+        "Glucose": 44.0,
+        "BloodPressure": 24.0,
+        "SkinThickness": 7.0,
+        "Insulin": 15.0,
+        "BMI": 18.2,
+        "DiabetesPedigreeFunction": 0.078,
+        "Age": 21.0
+      },
+      "max": {
+        "Pregnancies": 13.0,
+        "Glucose": 197.0,
+        "BloodPressure": 122.0,
+        "SkinThickness": 60.0,
+        "Insulin": 744.0,
+        "BMI": 57.3,
+        "DiabetesPedigreeFunction": 2.329,
+        "Age": 81.0
+      }
+    },
+    "1": {
+      "label": "Diabetes (1)",
+      "n": 268,
+      "mean": {
+        "Pregnancies": 4.866,
+        "Glucose": 142.32,
+        "BloodPressure": 75.321,
+        "SkinThickness": 33.0,
+        "Insulin": 206.846,
+        "BMI": 35.407,
+        "DiabetesPedigreeFunction": 0.55,
+        "Age": 37.067
+      },
+      "std": {
+        "Pregnancies": 3.741,
+        "Glucose": 29.599,
+        "BloodPressure": 12.3,
+        "SkinThickness": 10.328,
+        "Insulin": 132.7,
+        "BMI": 6.615,
+        "DiabetesPedigreeFunction": 0.372,
+        "Age": 10.968
+      },
+      "median": {
+        "Pregnancies": 4.0,
+        "Glucose": 140.0,
+        "BloodPressure": 74.5,
+        "SkinThickness": 32.0,
+        "Insulin": 169.5,
+        "BMI": 34.3,
+        "DiabetesPedigreeFunction": 0.449,
+        "Age": 36.0
+      },
+      "min": {
+        "Pregnancies": 0.0,
+        "Glucose": 78.0,
+        "BloodPressure": 30.0,
+        "SkinThickness": 7.0,
+        "Insulin": 14.0,
+        "BMI": 22.9,
+        "DiabetesPedigreeFunction": 0.088,
+        "Age": 21.0
+      },
+      "max": {
+        "Pregnancies": 17.0,
+        "Glucose": 199.0,
+        "BloodPressure": 114.0,
+        "SkinThickness": 99.0,
+        "Insulin": 846.0,
+        "BMI": 67.1,
+        "DiabetesPedigreeFunction": 2.42,
+        "Age": 70.0
+      }
+    }
+  },
+  "missing_value_analysis": {
+    "Pregnancies": {
+      "n_missing": 0,
+      "pct_missing": 0.0
+    },
+    "Glucose": {
+      "n_missing": 5,
+      "pct_missing": 0.65
+    },
+    "BloodPressure": {
+      "n_missing": 35,
+      "pct_missing": 4.56
+    },
+    "SkinThickness": {
+      "n_missing": 227,
+      "pct_missing": 29.56
+    },
+    "Insulin": {
+      "n_missing": 374,
+      "pct_missing": 48.7
+    },
+    "BMI": {
+      "n_missing": 11,
+      "pct_missing": 1.43
+    },
+    "DiabetesPedigreeFunction": {
+      "n_missing": 0,
+      "pct_missing": 0.0
+    },
+    "Age": {
+      "n_missing": 0,
+      "pct_missing": 0.0
+    }
+  },
+  "outlier_investigation": {
+    "Pregnancies": {
+      "n_mild_outliers_z2": 34,
+      "n_extreme_outliers_z3": 4,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "Glucose": {
+      "n_mild_outliers_z2": 39,
+      "n_extreme_outliers_z3": 0,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "BloodPressure": {
+      "n_mild_outliers_z2": 30,
+      "n_extreme_outliers_z3": 8,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "SkinThickness": {
+      "n_mild_outliers_z2": 13,
+      "n_extreme_outliers_z3": 2,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "Insulin": {
+      "n_mild_outliers_z2": 20,
+      "n_extreme_outliers_z3": 8,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "BMI": {
+      "n_mild_outliers_z2": 24,
+      "n_extreme_outliers_z3": 4,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "DiabetesPedigreeFunction": {
+      "n_mild_outliers_z2": 39,
+      "n_extreme_outliers_z3": 11,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    },
+    "Age": {
+      "n_mild_outliers_z2": 47,
+      "n_extreme_outliers_z3": 5,
+      "note": "EDA documentation only. No removal performed. Domain review required."
+    }
+  },
+  "pearson_correlation_with_target": {
+    "Pregnancies": 0.2219,
+    "Glucose": 0.4947,
+    "BloodPressure": 0.1706,
+    "SkinThickness": 0.2595,
+    "Insulin": 0.3035,
+    "BMI": 0.3137,
+    "DiabetesPedigreeFunction": 0.1738,
+    "Age": 0.2384
+  },
+  "research_notes": [
+    "Missing values in Glucose, BloodPressure, SkinThickness, Insulin, BMI represent zero-encoded missing data, converted to NaN in deterministic cleaning.",
+    "Glucose and BMI show the strongest positive correlations with the Outcome.",
+    "Insulin has the highest missingness rate (~49%) \u2014 imputation strategy must be determined carefully and applied only on training data.",
+    "No records were removed during EDA. All cleaning decisions are deferred to the training pipeline.",
+    "Outlier investigation is for documentation purposes only. No outliers were removed based solely on z-score."
+  ]
+}

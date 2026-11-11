@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-11-09T20:58:10.959128",
+  "phase": "Phase 9 \u2014 Explainable AI using SHAP",
+  "dataset": "PIMA",
+  "global_importance_rankings": [
+    {
+      "feature": "Glucose",
+      "mean_abs_shap": 0.6525976061820984
+    },
+    {
+      "feature": "BMI_Age_Interaction",
+      "mean_abs_shap": 0.2998102903366089
+    },
+    {
+      "feature": "BMI",
+      "mean_abs_shap": 0.20873062312602997
+    },
+    {
+      "feature": "High_Risk_Count",
+      "mean_abs_shap": 0.17220118641853333
+    },
+    {
+      "feature": "DiabetesPedigreeFunction",
+      "mean_abs_shap": 0.08659360557794571
+    },
+    {
+      "feature": "Pregnancies",
+      "mean_abs_shap": 0.056023284792900085
+    },
+    {
+      "feature": "Insulin",
+      "mean_abs_shap": 0.05416455864906311
+    },
+    {
+      "feature": "Glucose_Insulin_Ratio",
+      "mean_abs_shap": 0.029823578894138336
+    },
+    {
+      "feature": "Age",
+      "mean_abs_shap": 0.029546644538640976
+    },
+    {
+      "feature": "SkinThickness",
+      "mean_abs_shap": 0.02760646678507328
+    },
+    {
+      "feature": "BloodPressure",
+      "mean_abs_shap": 0.007357237860560417
+    },
+    {
+      "feature": "Age_Group",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "BMI_Category",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "Glucose_Category",
+      "mean_abs_shap": 0.0
+    }
+  ],
+  "top_features": [
+    "Glucose",
+    "BMI_Age_Interaction",
+    "BMI",
+    "High_Risk_Count",
+    "DiabetesPedigreeFunction"
+  ],
+  "interpretability_guidelines": {
+    "caution": "SHAP feature importances reflect statistical predictive power in this model.",
+    "non_causal": "High SHAP value does NOT prove that changing this variable cures or causes diabetes.",
+    "patient_communication": "Frame features as risk markers and health indicators rather than absolute diagnoses."
+  }
+}

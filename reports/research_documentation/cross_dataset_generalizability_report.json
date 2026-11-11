@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-11-09T21:04:33.793586",
+  "phase": "Phase 11: Cross-Dataset and External Generalization",
+  "datasets_profiled": {
+    "PIMA": {
+      "name": "PIMA Indians Diabetes Dataset",
+      "sample_size": 768,
+      "domain": "Clinical Measurements (Invasive)",
+      "key_features": [
+        "Glucose (2-hr OGTT)",
+        "Insulin",
+        "BMI",
+        "SkinThickness",
+        "BloodPressure",
+        "Age",
+        "Pregnancies",
+        "Pedigree"
+      ],
+      "target_definition": "Existing status: 2-hour post-load plasma glucose >= 200 mg/dl",
+      "population": "Adult females of Pima Indian heritage (Arizona, USA)",
+      "collection_context": "Clinical research trial / epidemiological survey (NIDDK)",
+      "transferability_constraint": "Features (Insulin, OGTT glucose) are invasive laboratory measurements. Cannot be calculated from survey data."
+    },
+    "CDC_BRFSS": {
+      "name": "CDC Diabetes Health Indicators",
+      "sample_size": 253680,
+      "domain": "Non-Invasive Lifestyle & Demographics",
+      "key_features": [
+        "HighBP",
+        "HighChol",
+        "BMI",
+        "Smoker",
+        "PhysActivity",
+        "GenHlth",
+        "MentHlth",
+        "PhysHlth",
+        "Age",
+        "Education",
+        "Income"
+      ],
+      "target_definition": "Self-reported doctor diagnosis of diabetes (Survey question)",
+      "population": "Broad civilian, non-institutionalized US adult population",
+      "collection_context": "Annual telephone surveillance survey (CDC BRFSS)",
+      "transferability_constraint": "Contains subjective self-reports and categorized ordinal bins. Zero biological lab measurements."
+    },
+    "UCI_SYMPTOM": {
+      "name": "UCI Early Stage Diabetes Risk Prediction",
+      "sample_size": 520,
+      "domain": "Clinical Symptoms (Acute Presentation)",
+      "key_features": [
+        "Polyuria",
+        "Polydipsia",
+        "Sudden Weight Loss",
+        "Weakness",
+        "Polyphagia",
+        "Genital Thrush",
+        "Visual Blurring",
+        "Itching"
+      ],
+      "target_definition": "Hospital outpatient confirmed diabetes diagnosis",
+      "population": "Hospital patients in Sylhet, Bangladesh",
+      "collection_context": "Direct patient intake questionnaire",
+      "transferability_constraint": "Symptoms (Polyuria, Polydipsia) are immediate physiological consequences of hyperglycemia. Not predictive of pre-diabetes."
+    }
+  },
+  "compatibility_matrix": {
+    "PIMA_vs_CDC": {
+      "shared_features": [
+        "BMI",
+        "Age (continuous in PIMA, binned in CDC)"
+      ],
+      "disjoint_features": "85% disjoint feature spaces",
+      "can_cross_evaluate": false,
+      "reason": "Missing invasive biochemical markers in CDC survey."
+    },
+    "PIMA_vs_UCI": {
+      "shared_features": [
+        "Age",
+        "Gender (implicit in PIMA as female)"
+      ],
+      "disjoint_features": "90% disjoint feature spaces",
+      "can_cross_evaluate": false,
+      "reason": "PIMA records clinical metrics; UCI records symptomatic complaints."
+    },
+    "CDC_vs_UCI": {
+      "shared_features": [
+        "Age",
+        "Sex/Gender"
+      ],
+      "disjoint_features": "88% disjoint feature spaces",
+      "can_cross_evaluate": false,
+      "reason": "CDC surveys long-term lifestyle habits; UCI surveys acute physiological symptoms."
+    }
+  },
+  "scientific_and_engineering_decision": "FORCING HARMONIZATION IS SCIENTIFICALLY FLAWED: Attempting to merge or impute missing features across these three datasets to force an artificial unified feature space would introduce massive synthetic variance and violate clinical validity. Therefore, DiabetesGuard AI explicitly maintains THREE DEDICATED SPECIALIZED TRACKS: (1) Clinical Assessment Module, (2) Non-Invasive Lifestyle Screener, and (3) Acute Symptom Checker. Each module runs its own validated, calibrated model suited to its context."
+}

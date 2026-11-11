@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-11-09T21:01:43.099499",
+  "total_records": 253680,
+  "target_column": "Diabetes_binary",
+  "class_proportions": {
+    "0": 86.07,
+    "1": 13.93
+  },
+  "top_positive_correlations": {
+    "GenHlth": 0.2936,
+    "HighBP": 0.2631,
+    "DiffWalk": 0.2183,
+    "BMI": 0.2168,
+    "HighChol": 0.2003,
+    "Age": 0.1774
+  },
+  "top_negative_correlations": {
+    "PhysActivity": -0.1181,
+    "Education": -0.1245,
+    "Income": -0.1639
+  },
+  "key_eda_observations": [
+    "Severe class imbalance: 86.07% non-diabetic vs 13.93% diabetic.",
+    "GenHlth (General Health), HighBP, and BMI demonstrate the strongest linear correlation with diabetes status.",
+    "Physical Activity and High Income have notable negative correlations with diabetes diagnosis.",
+    "Strong monotonic increase in prevalence with Age category: from <2% in bracket 1 to >25% in brackets 10-13."
+  ]
+}

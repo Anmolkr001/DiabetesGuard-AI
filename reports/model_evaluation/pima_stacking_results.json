@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-11-09T20:53:59.558411",
+  "phase": "Phase 7 \u2014 Stacking Ensemble Learning",
+  "dataset": "PIMA",
+  "architecture": {
+    "base_models": [
+      "logistic_regression",
+      "random_forest",
+      "xgboost",
+      "svm"
+    ],
+    "meta_model": "Logistic Regression (L2 regularised)",
+    "meta_inputs": "Out-of-fold predicted probabilities (predict_proba)",
+    "cv_splits": 5
+  },
+  "metrics": {
+    "cv_roc_auc": 0.849,
+    "cv_roc_auc_std": 0.019,
+    "cv_pr_auc": 0.7529,
+    "cv_pr_auc_std": 0.042,
+    "cv_f1": 0.6976,
+    "cv_f1_std": 0.0231,
+    "cv_bal_acc": 0.7681,
+    "oof_brier_score": 0.1599,
+    "oof_log_loss": 0.4907
+  },
+  "meta_model_weights": {
+    "logistic_regression": 1.9249755358845757,
+    "random_forest": 1.5251834502784203,
+    "xgboost": 0.998420280996307,
+    "svm": 1.1021479890452779
+  },
+  "meta_model_intercept": -2.5492666225679805,
+  "scientific_conclusion": "The Stacking Ensemble effectively combines diverse hypotheses (linear, bagged trees, gradient boosted trees, and kernel SVM). Its out-of-fold performance shows strong stability and generalization characteristics across training folds without data leakage."
+}

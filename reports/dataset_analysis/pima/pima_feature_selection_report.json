@@ -1,0 +1,160 @@
+{
+  "generated_at": "2026-11-09T20:50:28.357558",
+  "phase": "Phase 5b \u2014 Feature Selection (RFECV)",
+  "rfecv_results": {
+    "n_features_total": 14,
+    "n_features_optimal": 14,
+    "selected_features": [
+      "Pregnancies",
+      "Glucose",
+      "BloodPressure",
+      "SkinThickness",
+      "Insulin",
+      "BMI",
+      "DiabetesPedigreeFunction",
+      "Age",
+      "BMI_Age_Interaction",
+      "Glucose_Insulin_Ratio",
+      "Age_Group",
+      "BMI_Category",
+      "Glucose_Category",
+      "High_Risk_Count"
+    ],
+    "eliminated_features": [],
+    "feature_rankings": {
+      "Pregnancies": 1,
+      "Glucose": 1,
+      "BloodPressure": 1,
+      "SkinThickness": 1,
+      "Insulin": 1,
+      "BMI": 1,
+      "DiabetesPedigreeFunction": 1,
+      "Age": 1,
+      "BMI_Age_Interaction": 1,
+      "Glucose_Insulin_Ratio": 1,
+      "Age_Group": 1,
+      "BMI_Category": 1,
+      "Glucose_Category": 1,
+      "High_Risk_Count": 1
+    },
+    "cv_scores_by_n_features": {
+      "n_features": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mean_f1": [
+        0.6755,
+        0.6858,
+        0.6826,
+        0.6829,
+        0.6914,
+        0.6853,
+        0.6868,
+        0.6926,
+        0.6981,
+        0.6939,
+        0.6996,
+        0.7012
+      ],
+      "std_f1": [
+        0.0133,
+        0.0274,
+        0.0124,
+        0.0181,
+        0.0262,
+        0.029,
+        0.0159,
+        0.0217,
+        0.0241,
+        0.023,
+        0.0184,
+        0.0195
+      ]
+    },
+    "best_cv_f1": 0.7012
+  },
+  "feature_set_comparison": {
+    "original_8": {
+      "n_features": 8,
+      "features": [
+        "Pregnancies",
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI",
+        "DiabetesPedigreeFunction",
+        "Age"
+      ],
+      "mean_f1": 0.6724,
+      "std_f1": 0.0133,
+      "mean_roc_auc": 0.8442,
+      "std_roc_auc": 0.0164
+    },
+    "all_14_engineered": {
+      "n_features": 14,
+      "features": [
+        "Pregnancies",
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI",
+        "DiabetesPedigreeFunction",
+        "Age",
+        "BMI_Age_Interaction",
+        "Glucose_Insulin_Ratio",
+        "Age_Group",
+        "BMI_Category",
+        "Glucose_Category",
+        "High_Risk_Count"
+      ],
+      "mean_f1": 0.7012,
+      "std_f1": 0.0195,
+      "mean_roc_auc": 0.8444,
+      "std_roc_auc": 0.0172
+    },
+    "rfecv_selected": {
+      "n_features": 14,
+      "features": [
+        "Pregnancies",
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI",
+        "DiabetesPedigreeFunction",
+        "Age",
+        "BMI_Age_Interaction",
+        "Glucose_Insulin_Ratio",
+        "Age_Group",
+        "BMI_Category",
+        "Glucose_Category",
+        "High_Risk_Count"
+      ],
+      "mean_f1": 0.7012,
+      "std_f1": 0.0195,
+      "mean_roc_auc": 0.8444,
+      "std_roc_auc": 0.0172
+    }
+  },
+  "methodology_notes": [
+    "RFECV ran on training data only (614 records). Test set was not used.",
+    "Preprocessing (median imputer + standard scaler) was fitted on X_train.",
+    "LogisticRegression with balanced class weights was used as the RFE estimator.",
+    "F1-score was used as the scoring metric for RFECV.",
+    "Feature elimination was performed 1 feature at a time (step=1).",
+    "Minimum features to select was set to 3.",
+    "Medically relevant features should not be removed based solely on RFE ranking. The comparison table helps inform this decision."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-11-09T21:01:03.341863",
+  "dataset": "CDC Diabetes Health Indicators (BRFSS 2015)",
+  "task": "NON-INVASIVE LIFESTYLE & DEMOGRAPHIC SCREENING",
+  "task_distinction": "IMPORTANT DISTINCTION FOR RESEARCH DOCUMENTATION:\n==================================================\n\nEXISTING STATUS CLASSIFICATION (implemented in this project):\n- Uses current clinical measurements, survey responses, or symptoms.\n- Classifies whether a subject currently has or does not have diabetes.\n- All three datasets in this project are used for status classification.\n\nFUTURE RISK PREDICTION (NOT implemented \u2014 requires longitudinal data):\n- Requires repeated measurements over time.\n- Requires a defined follow-up period with confirmed outcomes.\n- Requires subjects who were diabetes-free at baseline.\n- None of the three datasets used in this project are longitudinal.\n- Genuine future risk prediction is listed as a future research opportunity.\n\nThis distinction must be preserved in all code comments, notebooks,\nAPI responses, frontend display text, and research documentation.",
+  "total_records": 253680,
+  "total_features": 21,
+  "columns": [
+    "Diabetes_binary",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "BMI",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "MentHlth",
+    "PhysHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "target_investigation": {
+    "target_column": "Diabetes_binary",
+    "unique_values": [
+      0,
+      1
+    ],
+    "class_counts": {
+      "0": 218334,
+      "1": 35346
+    },
+    "class_percentages": {
+      "0": 86.07,
+      "1": 13.93
+    },
+    "is_binary": true,
+    "prediabetes_handling": "In the CDC diabetes_binary dataset, the target is binary: 0 = No Diabetes (or prediabetes excluded/categorized as non-diabetic), 1 = Diagnosed Diabetes. Class 1 accounts for ~13.9% of the surveyed population."
+  },
+  "duplicate_investigation": {
+    "total_records": 253680,
+    "duplicate_rows": 24206,
+    "duplicate_percentage": 9.54,
+    "decision": "RETAIN ALL IDENTICAL ROWS",
+    "scientific_justification": "BRFSS 2015 contains 253,680 respondents surveyed across discrete categorical features. Due to feature discretization (Age has 13 bins, Income has 8 bins, binary flags for health conditions), it is mathematically inevitable that different individuals provide identical survey responses. Dropping duplicate rows would bias the prevalence distribution."
+  },
+  "null_counts": {
+    "Diabetes_binary": 0,
+    "HighBP": 0,
+    "HighChol": 0,
+    "CholCheck": 0,
+    "BMI": 0,
+    "Smoker": 0,
+    "Stroke": 0,
+    "HeartDiseaseorAttack": 0,
+    "PhysActivity": 0,
+    "Fruits": 0,
+    "Veggies": 0,
+    "HvyAlcoholConsump": 0,
+    "AnyHealthcare": 0,
+    "NoDocbcCost": 0,
+    "GenHlth": 0,
+    "MentHlth": 0,
+    "PhysHlth": 0,
+    "DiffWalk": 0,
+    "Sex": 0,
+    "Age": 0,
+    "Education": 0,
+    "Income": 0
+  },
+  "features_documentation": {
+    "HighBP": "0 = no high BP, 1 = high BP",
+    "HighChol": "0 = no high cholesterol, 1 = high cholesterol",
+    "CholCheck": "0 = no cholesterol check in 5 years, 1 = yes",
+    "BMI": "Body Mass Index (kg/m\u00b2)",
+    "Smoker": "Have you smoked at least 100 cigarettes in your entire life? [0 = no, 1 = yes]",
+    "Stroke": "(Ever told) you had a stroke. 0 = no, 1 = yes",
+    "HeartDiseaseorAttack": "Coronary heart disease (CHD) or myocardial infarction (MI) [0 = no, 1 = yes]",
+    "PhysActivity": "Physical activity in past 30 days - not including job [0 = no, 1 = yes]",
+    "Fruits": "Consume Fruit 1 or more times per day [0 = no, 1 = yes]",
+    "Veggies": "Consume Vegetables 1 or more times per day [0 = no, 1 = yes]",
+    "HvyAlcoholConsump": "Heavy drinkers (adult men >=14 drinks/week and women >=7 drinks/week) [0 = no, 1 = yes]",
+    "AnyHealthcare": "Have any kind of health care coverage [0 = no, 1 = yes]",
+    "NoDocbcCost": "Was there a time in the past 12 months when you needed to see a doctor but could not because of cost? [0 = no, 1 = yes]",
+    "GenHlth": "Would you say that in general your health is: 1 = excellent, 2 = very good, 3 = good, 4 = fair, 5 = poor",
+    "MentHlth": "Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good? (0-30)",
+    "PhysHlth": "Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good? (0-30)",
+    "DiffWalk": "Do you have serious difficulty walking or climbing stairs? [0 = no, 1 = yes]",
+    "Sex": "0 = female, 1 = male",
+    "Age": "13-level age category (1 = 18-24, 9 = 60-64, 13 = 80 or older)",
+    "Education": "Education level (1 = never attended school or only kindergarten, 6 = 4 years of college or more)",
+    "Income": "Income scale (1 = less than $10,000, 8 = $75,000 or more)"
+  }
+}

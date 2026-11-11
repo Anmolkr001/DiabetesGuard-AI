@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-11-09T20:39:25.187827",
+  "source": "pima_cleaned.csv",
+  "shape": {
+    "rows": 768,
+    "columns": 9
+  },
+  "missing_after_cleaning": {
+    "Pregnancies": 0,
+    "Glucose": 5,
+    "BloodPressure": 35,
+    "SkinThickness": 227,
+    "Insulin": 374,
+    "BMI": 11,
+    "DiabetesPedigreeFunction": 0,
+    "Age": 0,
+    "Outcome": 0
+  },
+  "missing_pct_after_cleaning": {
+    "Pregnancies": 0.0,
+    "Glucose": 0.65,
+    "BloodPressure": 4.56,
+    "SkinThickness": 29.56,
+    "Insulin": 48.7,
+    "BMI": 1.43,
+    "DiabetesPedigreeFunction": 0.0,
+    "Age": 0.0,
+    "Outcome": 0.0
+  },
+  "cleaning_operations": [
+    "Replaced 0 with NaN in Glucose (5 values) \u2014 domain knowledge: Zero glucose is physiologically impossible for a living subject; indicates missing data",
+    "Replaced 0 with NaN in BloodPressure (35 values) \u2014 domain knowledge: Zero blood pressure is physiologically impossible; indicates missing data",
+    "Replaced 0 with NaN in SkinThickness (227 values) \u2014 domain knowledge: Zero skin thickness is physiologically implausible; likely missing data",
+    "Replaced 0 with NaN in Insulin (374 values) \u2014 domain knowledge: Zero insulin may indicate missing data or true physiological zero \u2014 context-dependent",
+    "Replaced 0 with NaN in BMI (11 values) \u2014 domain knowledge: Zero BMI is physically impossible; indicates missing data"
+  ],
+  "note": "This file contains ONLY deterministically cleaned data. No imputation, scaling, or any learned transformation has been applied. Train/test split and learned preprocessing must be applied separately."
+}

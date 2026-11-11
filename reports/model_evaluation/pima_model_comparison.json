@@ -1,0 +1,209 @@
+{
+  "generated_at": "2026-11-09T20:52:30.338722",
+  "phase": "Phase 6 \u2014 Individual Machine Learning Models",
+  "dataset": "PIMA",
+  "n_train_records": 614,
+  "n_features": 14,
+  "features_used": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age",
+    "BMI_Age_Interaction",
+    "Glucose_Insulin_Ratio",
+    "Age_Group",
+    "BMI_Category",
+    "Glucose_Category",
+    "High_Risk_Count"
+  ],
+  "imbalance_strategy_comparison": {
+    "default": {
+      "logistic_regression": {
+        "mean_roc_auc": 0.8423,
+        "std_roc_auc": 0.0167,
+        "mean_pr_auc": 0.7554,
+        "std_pr_auc": 0.0531,
+        "mean_f1": 0.6491,
+        "std_f1": 0.024,
+        "mean_bal_acc": 0.7348
+      },
+      "random_forest": {
+        "mean_roc_auc": 0.8275,
+        "std_roc_auc": 0.0288,
+        "mean_pr_auc": 0.7167,
+        "std_pr_auc": 0.0507,
+        "mean_f1": 0.6318,
+        "std_f1": 0.0322,
+        "mean_bal_acc": 0.7204
+      },
+      "xgboost": {
+        "mean_roc_auc": 0.7934,
+        "std_roc_auc": 0.0345,
+        "mean_pr_auc": 0.6653,
+        "std_pr_auc": 0.0518,
+        "mean_f1": 0.6022,
+        "std_f1": 0.0325,
+        "mean_bal_acc": 0.6974
+      },
+      "svm": {
+        "mean_roc_auc": 0.8268,
+        "std_roc_auc": 0.0271,
+        "mean_pr_auc": 0.731,
+        "std_pr_auc": 0.0401,
+        "mean_f1": 0.6276,
+        "std_f1": 0.0287,
+        "mean_bal_acc": 0.7203
+      }
+    },
+    "class_weight": {
+      "logistic_regression": {
+        "mean_roc_auc": 0.8445,
+        "std_roc_auc": 0.0173,
+        "mean_pr_auc": 0.7567,
+        "std_pr_auc": 0.0537,
+        "mean_f1": 0.6996,
+        "std_f1": 0.019,
+        "mean_bal_acc": 0.7696
+      },
+      "random_forest": {
+        "mean_roc_auc": 0.8281,
+        "std_roc_auc": 0.0275,
+        "mean_pr_auc": 0.7085,
+        "std_pr_auc": 0.056,
+        "mean_f1": 0.6299,
+        "std_f1": 0.0427,
+        "mean_bal_acc": 0.721
+      },
+      "xgboost": {
+        "mean_roc_auc": 0.7889,
+        "std_roc_auc": 0.0276,
+        "mean_pr_auc": 0.6669,
+        "std_pr_auc": 0.0421,
+        "mean_f1": 0.6158,
+        "std_f1": 0.0383,
+        "mean_bal_acc": 0.7062
+      },
+      "svm": {
+        "mean_roc_auc": 0.8384,
+        "std_roc_auc": 0.0321,
+        "mean_pr_auc": 0.7131,
+        "std_pr_auc": 0.0587,
+        "mean_f1": 0.6908,
+        "std_f1": 0.0309,
+        "mean_bal_acc": 0.7614
+      }
+    },
+    "smote": {
+      "logistic_regression": {
+        "mean_roc_auc": 0.8412,
+        "std_roc_auc": 0.016,
+        "mean_pr_auc": 0.7564,
+        "std_pr_auc": 0.05,
+        "mean_f1": 0.7041,
+        "std_f1": 0.0144,
+        "mean_bal_acc": 0.7733
+      },
+      "random_forest": {
+        "mean_roc_auc": 0.8229,
+        "std_roc_auc": 0.0314,
+        "mean_pr_auc": 0.6974,
+        "std_pr_auc": 0.0576,
+        "mean_f1": 0.6521,
+        "std_f1": 0.0305,
+        "mean_bal_acc": 0.7318
+      },
+      "xgboost": {
+        "mean_roc_auc": 0.7919,
+        "std_roc_auc": 0.0343,
+        "mean_pr_auc": 0.6762,
+        "std_pr_auc": 0.0343,
+        "mean_f1": 0.6154,
+        "std_f1": 0.037,
+        "mean_bal_acc": 0.7032
+      },
+      "svm": {
+        "mean_roc_auc": 0.835,
+        "std_roc_auc": 0.0311,
+        "mean_pr_auc": 0.7042,
+        "std_pr_auc": 0.0588,
+        "mean_f1": 0.6862,
+        "std_f1": 0.0382,
+        "mean_bal_acc": 0.7574
+      }
+    }
+  },
+  "chosen_imbalance_strategy": "class_weight",
+  "selection_rationale": "class_weight cost-sensitive learning provided the most reliable F1 and ROC-AUC trade-off across algorithms without synthesizing artificial instances (which carries overfitting risk given PIMA's small sample size of 614 training records).",
+  "tuned_models": {
+    "logistic_regression": {
+      "best_params": {
+        "C": 0.1,
+        "max_iter": 2000,
+        "penalty": "l2",
+        "solver": "lbfgs"
+      },
+      "cv_roc_auc": 0.8474,
+      "cv_roc_auc_std": 0.0165,
+      "cv_pr_auc": 0.7507,
+      "cv_pr_auc_std": 0.054,
+      "cv_f1": 0.703,
+      "cv_f1_std": 0.0169,
+      "cv_bal_acc": 0.7722
+    },
+    "random_forest": {
+      "best_params": {
+        "max_depth": 6,
+        "min_samples_leaf": 1,
+        "min_samples_split": 5,
+        "n_estimators": 100
+      },
+      "cv_roc_auc": 0.8449,
+      "cv_roc_auc_std": 0.0244,
+      "cv_pr_auc": 0.7443,
+      "cv_pr_auc_std": 0.0413,
+      "cv_f1": 0.6918,
+      "cv_f1_std": 0.0359,
+      "cv_bal_acc": 0.7629
+    },
+    "xgboost": {
+      "best_params": {
+        "learning_rate": 0.01,
+        "max_depth": 3,
+        "n_estimators": 200,
+        "subsample": 0.8
+      },
+      "cv_roc_auc": 0.8423,
+      "cv_roc_auc_std": 0.0246,
+      "cv_pr_auc": 0.7431,
+      "cv_pr_auc_std": 0.0524,
+      "cv_f1": 0.6973,
+      "cv_f1_std": 0.0183,
+      "cv_bal_acc": 0.7677
+    },
+    "svm": {
+      "best_params": {
+        "C": 1.0,
+        "gamma": 0.01,
+        "kernel": "rbf",
+        "probability": true
+      },
+      "cv_roc_auc": 0.8496,
+      "cv_roc_auc_std": 0.0166,
+      "cv_pr_auc": 0.7439,
+      "cv_pr_auc_std": 0.0413,
+      "cv_f1": 0.6845,
+      "cv_f1_std": 0.0157,
+      "cv_bal_acc": 0.7571
+    }
+  },
+  "leakage_prevention": [
+    "All tuning and evaluation was performed on X_train (614 rows).",
+    "The held-out test set (154 rows) was NOT touched.",
+    "Imputation and scaling occurred inside each fold of cross-validation.",
+    "Tuned pipelines include the preprocessing steps so they accept raw inputs at inference."
+  ]
+}

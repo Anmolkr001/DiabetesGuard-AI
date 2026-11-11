@@ -1,0 +1,14 @@
+scikit-learn==1.8.0
+xgboost==3.4.1
+pandas==2.2.3
+numpy==2.2.4
+shap==0.53.0
+joblib==1.5.3
+imbalanced-learn==0.13.0
+matplotlib==3.10.8
+seaborn==0.13.2
+jupyter==1.1.1
+notebook==7.4.2
+ipykernel==6.29.5
+scipy==1.15.3
+
