@@ -256,3 +256,4 @@ async def chat_with_diacare(
         "is_emergency": False,
         "citations": citations
     }
+

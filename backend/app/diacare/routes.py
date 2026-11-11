@@ -84,3 +84,4 @@ def diacare_health():
         "model": "gemini-3.5-flash-lite",
         "supported_formats": [".pdf", ".jpg", ".jpeg", ".png"]
     }
+

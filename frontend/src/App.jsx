@@ -13,6 +13,7 @@ import PredictionResults from './pages/PredictionResults';
 import AssessmentHistory from './pages/AssessmentHistory';
 import ModelAnalytics from './pages/ModelAnalytics';
 import AboutResearch from './pages/AboutResearch';
+import DiaCarePage from './pages/DiaCarePage';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/history" element={<AssessmentHistory />} />
             <Route path="/analytics" element={<ModelAnalytics />} />
             <Route path="/about" element={<AboutResearch />} />
+            <Route path="/diacare" element={<DiaCarePage />} />
           </Routes>
         </main>
         <Footer />
