@@ -5,7 +5,7 @@ import {
   ArrowRight, ShieldCheck, Sparkles, ChevronRight
 } from 'lucide-react';
 import { DiaCareAvatar } from '../components/DiaCareChatbot';
-import { GlassButton, GlassDot } from '../components/GlassButton';
+import GlassButton from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 
 const Dashboard = () => {
@@ -84,14 +84,14 @@ const Dashboard = () => {
 
             <GlassButton
               onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
-              variant="ai"
+              variant="default"
               size="md"
-              className="rounded-xl font-bold shadow-md cursor-pointer"
+              className="rounded-xl font-bold border-sky-400/40 hover:border-sky-300 shadow-md text-sky-100"
               title="Ask DiaCare AI Medical Assistant"
             >
               <DiaCareAvatar size={18} className="mr-2" />
               <span>Ask DiaCare AI</span>
-              <GlassDot className="ml-2" />
+              <span className="ml-2 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
             </GlassButton>
           </div>
         </div>

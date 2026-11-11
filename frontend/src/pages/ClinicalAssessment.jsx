@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Stethoscope, ArrowRight, ArrowLeft, AlertCircle, Info } from 'lucide-react';
-import { GlassButton } from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
@@ -106,25 +105,29 @@ const ClinicalAssessment = () => {
                 Select patient biological sex to configure gender-specific clinical fields
               </span>
             </div>
-            <div className="flex items-center space-x-2 bg-white/80 p-1 rounded-xl border border-slate-200 shadow-sm">
-              <GlassButton
+            <div className="flex items-center space-x-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+              <button
                 type="button"
                 onClick={() => handleGenderChange('female')}
-                variant={gender === 'female' ? 'primary' : 'light'}
-                size="sm"
-                className="rounded-lg font-bold"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
+                  gender === 'female'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
               >
                 <span>👩 Female</span>
-              </GlassButton>
-              <GlassButton
+              </button>
+              <button
                 type="button"
                 onClick={() => handleGenderChange('male')}
-                variant={gender === 'male' ? 'primary' : 'light'}
-                size="sm"
-                className="rounded-lg font-bold"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
+                  gender === 'male'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
               >
                 <span>👨 Male</span>
-              </GlassButton>
+              </button>
             </div>
           </div>
 
@@ -285,16 +288,14 @@ const ClinicalAssessment = () => {
         </div>
 
         <div className="pt-4 border-t border-slate-100 flex justify-end">
-          <GlassButton
+          <button
             type="submit"
             disabled={loading}
-            variant="primary"
-            size="lg"
-            className="rounded-xl font-bold shadow-lg shadow-blue-500/25"
+            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl flex items-center shadow-md disabled:opacity-50 transition"
           >
-            <span>{loading ? 'Evaluating Model & SHAP...' : 'Generate Clinical Risk Assessment'}</span>
+            {loading ? 'Evaluating Model & SHAP...' : 'Generate Clinical Risk Assessment'}
             <ArrowRight className="ml-2 w-4 h-4" />
-          </GlassButton>
+          </button>
         </div>
       </form>
     </div>

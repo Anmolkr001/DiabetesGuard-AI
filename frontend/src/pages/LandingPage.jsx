@@ -5,7 +5,6 @@ import {
   ChevronRight, BarChart2, Brain, Activity, Zap, Lock, Sparkles, Bot
 } from 'lucide-react';
 import { DiaCareAvatar } from '../components/DiaCareChatbot';
-import { GlassButton, GlassDot } from '../components/GlassButton';
 
 /* ─── 3D Tilt Card ─── */
 const TiltCard = ({ children, className = '' }) => {
@@ -376,38 +375,31 @@ const LandingPage = () => {
             Clinical labs, lifestyle surveys, or symptom presentation — choose your track.
           </p>
 
-          {/* Glassy Hero CTA Buttons */}
+          {/* Glassy CTA Buttons */}
           <div className="mt-10 flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
-            <GlassButton
+            <Link
               to="/clinical"
-              variant="primary"
-              size="lg"
-              className="rounded-full font-bold shadow-xl shadow-indigo-500/25 group"
+              className="glass-btn-primary group relative inline-flex items-center px-8 py-4 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300"
             >
-              <span>Begin Assessment</span>
-              <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </GlassButton>
-
-            <GlassButton
+              <span className="relative flex items-center">
+                Begin Assessment <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+            <button
+              type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
-              variant="ai"
-              size="lg"
-              className="rounded-full font-bold shadow-xl cursor-pointer"
+              className="glass-btn group relative inline-flex items-center px-7 py-3.5 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300 hover:border-sky-300/60 cursor-pointer"
             >
-              <DiaCareAvatar size={24} className="mr-2" />
+              <DiaCareAvatar size={24} className="mr-2.5" />
               <span>Ask DiaCare AI</span>
-              <GlassDot className="ml-2" />
-            </GlassButton>
-
-            <GlassButton
+              <span className="ml-2 w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+            </button>
+            <Link
               to="/analytics"
-              variant="default"
-              size="lg"
-              className="rounded-full font-bold shadow-xl"
+              className="glass-btn inline-flex items-center px-7 py-3.5 rounded-full text-white/90 font-bold text-sm shadow-xl hover:text-white transition-all duration-300"
             >
-              <BarChart2 className="mr-2 w-5 h-5 text-indigo-300" />
-              <span>Model Analytics</span>
-            </GlassButton>
+              <BarChart2 className="mr-2 w-5 h-5 text-indigo-300" /> Model Analytics
+            </Link>
           </div>
         </div>
 
@@ -535,15 +527,18 @@ const LandingPage = () => {
                           </div>
                         </div>
 
-                        <GlassButton
+                        <Link
                           to={track.path}
-                          variant={i === 0 ? 'primary' : i === 1 ? 'success' : 'warning'}
-                          size="md"
-                          className="w-full rounded-2xl font-bold justify-center shadow-lg group/btn"
+                          className="group/btn w-full py-3.5 px-5 rounded-2xl text-white text-sm font-bold flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
+                          style={{
+                            background: `linear-gradient(135deg, ${track.iconLight}, ${track.iconDark})`,
+                            boxShadow: `0 6px 20px ${track.iconShadow}`,
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 10px 30px ${track.iconShadow}`; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 6px 20px ${track.iconShadow}`; }}
                         >
-                          <span>Launch Screener</span>
-                          <ChevronRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                        </GlassButton>
+                          Launch Screener <ChevronRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
                       </div>
                     </div>
                   </TiltCard>
@@ -606,33 +601,15 @@ const LandingPage = () => {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">Ready to Begin Your Screening?</h2>
           <p className="text-lg text-blue-100/80 mb-10 max-w-lg mx-auto">Select a track to receive your calibrated, explainable assessment report in seconds.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <GlassButton
-              to="/clinical"
-              variant="white"
-              size="lg"
-              className="rounded-2xl font-bold shadow-xl"
-            >
-              <Stethoscope className="w-4 h-4 mr-2" />
-              <span>Clinical Lab Track</span>
-            </GlassButton>
-            <GlassButton
-              to="/lifestyle"
-              variant="default"
-              size="lg"
-              className="rounded-2xl font-bold shadow-xl"
-            >
-              <HeartPulse className="w-4 h-4 mr-2" />
-              <span>Lifestyle Screener</span>
-            </GlassButton>
-            <GlassButton
-              to="/symptoms"
-              variant="default"
-              size="lg"
-              className="rounded-2xl font-bold shadow-xl"
-            >
-              <AlertCircle className="w-4 h-4 mr-2" />
-              <span>Symptom Triage</span>
-            </GlassButton>
+            <Link to="/clinical" className="px-8 py-4 rounded-2xl bg-white text-indigo-700 font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+              <Stethoscope className="inline w-4 h-4 mr-2 -mt-0.5" /> Clinical Lab Track
+            </Link>
+            <Link to="/lifestyle" className="px-8 py-4 rounded-2xl bg-white/10 backdrop-blur border border-white/20 text-white font-bold text-sm hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-300">
+              <HeartPulse className="inline w-4 h-4 mr-2 -mt-0.5" /> Lifestyle Screener
+            </Link>
+            <Link to="/symptoms" className="px-8 py-4 rounded-2xl bg-white/10 backdrop-blur border border-white/20 text-white font-bold text-sm hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-300">
+              <AlertCircle className="inline w-4 h-4 mr-2 -mt-0.5" /> Symptom Triage
+            </Link>
           </div>
         </div>
       </section>

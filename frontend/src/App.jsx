@@ -24,8 +24,7 @@ function App() {
         {/* Soft Radiant Gradient Background Blobs for Glassmorphism Refraction */}
         <BackgroundBlobs />
         <Navbar />
-        {/* Top spacing ensures floating glass-nav capsule doesn't cover page content */}
-        <main className="flex-grow pt-20 sm:pt-24">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<Dashboard />} />

@@ -4,7 +4,6 @@ import {
   Sparkles, RefreshCw, X, ChevronDown, ChevronUp, Stethoscope,
   MessageCircle, Minimize2, Paperclip
 } from 'lucide-react';
-import { GlassButton, GlassDot } from './GlassButton';
 import { diacareService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
@@ -279,7 +278,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
   };
 
   // ─────────────────────────────────────────────────────────────
-  // 1. FLOATING CHATBOT BUTTON (glass-fab)
+  // 1. STYLISH GLASSY FLOATING ACTION BUTTON (COMPACT 3D AI ORB)
   // ─────────────────────────────────────────────────────────────
   if (!isOpen && !fullPage) {
     return (
@@ -290,29 +289,29 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           <span>Ask DiaCare AI</span>
         </div>
 
-        {/* Floating Action Button (glass-fab) */}
-        <GlassButton
+        {/* Floating 3D AI Orb Button */}
+        <button
           onClick={() => setIsOpen(true)}
-          isFab
-          variant="primary"
-          className="glass-fab relative w-14 h-14 sm:w-16 sm:h-16 rounded-full"
-          title="Open DiaCare AI Health Assistant"
-          ariaLabel="Open DiaCare AI Health Assistant"
+          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-[24px] sm:rounded-[26px] flex items-center justify-center glass-btn-primary animate-neon-pulse shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
+          aria-label="Open DiaCare AI Health Assistant"
         >
           {/* Radial radar beacon wave */}
-          <span className="absolute inset-0 rounded-full bg-sky-400 opacity-20 animate-ping pointer-events-none" />
+          <span className="absolute inset-0 rounded-[24px] sm:rounded-[26px] bg-sky-400 opacity-20 animate-ping pointer-events-none" />
 
           {/* 3D Animated DiaCare Avatar */}
           <DiaCareAvatar size={38} className="relative z-10 transition-transform duration-300 group-hover:scale-105" />
 
           {/* Live Status indicator dot badge */}
-          <GlassDot className="absolute -top-1 -right-1 z-20" />
+          <span className="absolute -top-1 -right-1 flex h-4 w-4 z-20">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-slate-900 shadow-[0_0_10px_#34d399]" />
+          </span>
 
           {/* Futuristic bottom mini-tag */}
           <span className="absolute -bottom-1 px-1.5 py-0.2 rounded-full bg-slate-900/90 border border-sky-400/50 text-[8px] font-black text-sky-300 tracking-wider uppercase z-20 shadow-md">
             AI
           </span>
-        </GlassButton>
+        </button>
       </aside>
     );
   }
@@ -349,7 +348,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
                 DiaCare AI
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-extrabold uppercase tracking-wider flex items-center shadow-[0_0_10px_rgba(52,211,153,0.3)]">
-                <GlassDot className="mr-1.5" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1" />
                 Live Gemini 3.5
               </span>
             </div>
@@ -357,7 +356,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           </div>
         </div>
 
-        {/* Action Controls with GlassButton */}
+        {/* Action Controls with Glassy Buttons */}
         <div className="flex items-center space-x-2 relative z-10">
           {/* Hidden File Input */}
           <input
@@ -369,44 +368,34 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           />
 
           {/* Glassy Upload Report Button */}
-          <GlassButton
+          <button
             onClick={() => fileInputRef.current?.click()}
             disabled={reportLoading}
-            variant="default"
-            size="sm"
-            className="rounded-full text-[11px] font-bold px-3 py-1 cursor-pointer"
+            className="glass-btn px-3 py-1.5 rounded-full text-[11px] font-bold text-white flex items-center space-x-1.5 cursor-pointer"
             title="Upload Laboratory Report (PDF/Images)"
           >
-            <Paperclip className="w-3.5 h-3.5 mr-1 text-sky-300" />
+            <Paperclip className="w-3.5 h-3.5 text-sky-300" />
             <span className="hidden sm:inline">{reportLoading ? 'Analyzing...' : 'Report'}</span>
-          </GlassButton>
+          </button>
 
           {/* Glassy Reset Button */}
-          <GlassButton
+          <button
             onClick={handleReset}
-            variant="default"
-            size="icon"
-            isIcon
-            className="w-8 h-8 rounded-full cursor-pointer"
+            className="glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-300 hover:text-white cursor-pointer"
             title="Clear Conversation"
-            ariaLabel="Clear Conversation"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-slate-200" />
-          </GlassButton>
+            <RefreshCw className="w-3.5 h-3.5" />
+          </button>
 
           {/* Glassy Close (X) Button */}
           {!fullPage && (
-            <GlassButton
+            <button
               onClick={() => setIsOpen(false)}
-              variant="default"
-              size="icon"
-              isIcon
-              className="w-8 h-8 rounded-full hover:border-rose-400/50 hover:text-rose-300 cursor-pointer"
+              className="glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-300 hover:text-rose-300 hover:border-rose-400/50 cursor-pointer"
               title="Close DiaCare AI"
-              ariaLabel="Close DiaCare AI"
             >
-              <X className="w-4 h-4 text-slate-200" />
-            </GlassButton>
+              <X className="w-4 h-4" />
+            </button>
           )}
         </div>
       </div>
@@ -543,18 +532,14 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             disabled={loading}
             className="flex-1 px-4 py-1.5 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
           />
-          <GlassButton
+          <button
             type="submit"
             disabled={!input.trim() || loading}
-            variant="primary"
-            isIcon
-            size="icon"
-            className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer disabled:opacity-40"
+            className="glass-btn-primary w-9 h-9 rounded-full flex items-center justify-center text-white cursor-pointer disabled:opacity-40 transition"
             title="Send Message"
-            ariaLabel="Send Message"
           >
             <Send className="w-3.5 h-3.5" />
-          </GlassButton>
+          </button>
         </form>
       </div>
     </div>

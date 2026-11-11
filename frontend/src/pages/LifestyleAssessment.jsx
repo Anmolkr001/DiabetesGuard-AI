@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeartPulse, ArrowRight, ArrowLeft, AlertCircle, Info } from 'lucide-react';
-import { GlassButton } from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
@@ -107,25 +106,29 @@ const LifestyleAssessment = () => {
                 BRFSS epidemiological model calibrates risk weighting based on demographic sex
               </span>
             </div>
-            <div className="flex items-center space-x-2 bg-white/80 p-1 rounded-xl border border-slate-200 shadow-sm">
-              <GlassButton
+            <div className="flex items-center space-x-2 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+              <button
                 type="button"
                 onClick={() => setFormData((prev) => ({ ...prev, sex: 0 }))}
-                variant={formData.sex === 0 ? 'success' : 'light'}
-                size="sm"
-                className="rounded-lg font-bold"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
+                  formData.sex === 0
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
               >
                 <span>👩 Female</span>
-              </GlassButton>
-              <GlassButton
+              </button>
+              <button
                 type="button"
                 onClick={() => setFormData((prev) => ({ ...prev, sex: 1 }))}
-                variant={formData.sex === 1 ? 'success' : 'light'}
-                size="sm"
-                className="rounded-lg font-bold"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
+                  formData.sex === 1
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
               >
                 <span>👨 Male</span>
-              </GlassButton>
+              </button>
             </div>
           </div>
         </div>
@@ -264,16 +267,14 @@ const LifestyleAssessment = () => {
         </div>
 
         <div className="pt-4 border-t border-slate-100 flex justify-end">
-          <GlassButton
+          <button
             type="submit"
             disabled={loading}
-            variant="success"
-            size="lg"
-            className="rounded-xl font-bold shadow-lg shadow-emerald-500/25"
+            className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl flex items-center shadow-md disabled:opacity-50 transition"
           >
-            <span>{loading ? 'Evaluating Lifestyle Factors...' : 'Generate Non-Invasive Assessment'}</span>
+            {loading ? 'Evaluating Lifestyle Factors...' : 'Generate Non-Invasive Assessment'}
             <ArrowRight className="ml-2 w-4 h-4" />
-          </GlassButton>
+          </button>
         </div>
       </form>
     </div>
