@@ -14,6 +14,7 @@ import AssessmentHistory from './pages/AssessmentHistory';
 import ModelAnalytics from './pages/ModelAnalytics';
 import AboutResearch from './pages/AboutResearch';
 import DiaCarePage from './pages/DiaCarePage';
+import DiaCareChatbot from './components/DiaCareChatbot';
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        {/* Floating Global DiaCare AI Assistant Icon & Popup */}
+        <DiaCareChatbot />
       </div>
     </Router>
   );

@@ -4,7 +4,6 @@ import {
   Stethoscope, HeartPulse, AlertCircle, ShieldCheck, CheckCircle2,
   ChevronRight, BarChart2, Brain, Activity, Zap, Lock, Sparkles, Bot
 } from 'lucide-react';
-import DiaCareChatbot from '../components/DiaCareChatbot';
 
 /* ─── 3D Tilt Card ─── */
 const TiltCard = ({ children, className = '' }) => {
@@ -387,13 +386,14 @@ const LandingPage = () => {
                 Begin Assessment <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
-            <a
-              href="#diacare-chat"
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
               className="group relative inline-flex items-center px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-600 to-purple-600 text-white font-bold text-sm shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/50 hover:-translate-y-1 transition-all duration-300"
             >
               <Bot className="mr-2 w-5 h-5 text-sky-200" />
-              <span>Ask DiaCare AI / Upload Report</span>
-            </a>
+              <span>Ask DiaCare AI</span>
+            </button>
             <Link
               to="/analytics"
               className="inline-flex items-center px-8 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md text-white/90 font-bold text-sm hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
@@ -552,24 +552,6 @@ const LandingPage = () => {
             <div className="h-1 w-32 rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400 opacity-40" />
           </div>
         </div>
-      </section>
-
-      {/* ═══════════════ DIACARE AI CHATBOT & LAB REPORT ANALYZER ═══════════════ */}
-      <section id="diacare-chat" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>AI Healthcare Assistant & OCR Lab Analyzer</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            DiaCare AI Health Assistant
-          </h2>
-          <p className="mt-2 text-base text-slate-500 max-w-2xl mx-auto">
-            Upload your diabetes medical reports (PDF or images) for automated parameter extraction, or ask questions about Indian nutrition, exercise, and diabetes education.
-          </p>
-        </div>
-
-        <DiaCareChatbot />
       </section>
 
       {/* ═══════════════ PILLARS — DARK 3D ═══════════════ */}

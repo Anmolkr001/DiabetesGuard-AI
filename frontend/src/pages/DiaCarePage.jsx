@@ -22,7 +22,7 @@ const DiaCarePage = () => {
       </div>
 
       {/* Embedded Chatbot & Analyzer Component */}
-      <DiaCareChatbot />
+      <DiaCareChatbot fullPage={true} />
     </div>
   );
 };

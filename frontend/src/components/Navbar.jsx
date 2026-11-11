@@ -75,18 +75,15 @@ const Navbar = () => {
             })}
 
             {/* Special DiaCare AI Button */}
-            <Link
-              to="/diacare"
-              className={`flex items-center space-x-1.5 ml-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
-                location.pathname === '/diacare'
-                  ? 'bg-gradient-to-r from-sky-400 to-indigo-500 text-white border-sky-300 shadow-md shadow-indigo-500/30'
-                  : 'bg-indigo-500/20 text-sky-300 border-indigo-400/40 hover:bg-indigo-500/35 hover:text-white'
-              }`}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
+              className="flex items-center space-x-1.5 ml-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 border bg-indigo-500/20 text-sky-300 border-indigo-400/40 hover:bg-indigo-500/35 hover:text-white"
             >
               <Bot className="w-3.5 h-3.5 text-sky-300" />
               <span>DiaCare AI</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
-            </Link>
+            </button>
           </nav>
         </div>
       </div>
