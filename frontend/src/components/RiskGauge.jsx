@@ -25,13 +25,11 @@ const RiskGauge = ({ probability = 0, category = 'Standard Risk', confidenceInte
     dropShadowColor = 'rgba(245, 158, 11, 0.4)';
   }
 
-  // Precision Semi-Circle Arc Geometry
+  // Precision Semi-Circle Arc Geometry with SVG pathLength="100"
   // Center: (100, 95), Radius: 76
   // Left point: (24, 95), Right point: (176, 95), Apex: (100, 19)
-  // Arc length = PI * Radius = PI * 76 = ~238.761
-  const radius = 76;
-  const arcLength = Math.PI * radius; // 238.761
-  const strokeDashoffset = arcLength * (1 - clampedProb);
+  // pathLength="100" normalizes the strokeDasharray directly to percentage (0 - 100)
+  const strokeOffset = Math.max(0, Math.min(100, 100 - clampedProb * 100));
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md">
@@ -86,12 +84,14 @@ const RiskGauge = ({ probability = 0, category = 'Standard Risk', confidenceInte
             stroke={`url(#${gradientId})`}
             strokeWidth="15"
             strokeLinecap="round"
-            strokeDasharray={arcLength}
-            strokeDashoffset={strokeDashoffset}
+            pathLength="100"
+            strokeDasharray="100 200"
+            strokeDashoffset={strokeOffset}
+            strokeOpacity={clampedProb > 0.005 ? 1 : 0}
             filter="url(#gaugeGlow)"
             className="transition-all duration-1000 ease-out"
             style={{
-              transition: 'stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+              transition: 'stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1), stroke-opacity 0.2s ease',
             }}
           />
         </svg>

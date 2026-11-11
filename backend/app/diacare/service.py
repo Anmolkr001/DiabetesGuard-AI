@@ -24,10 +24,10 @@ logger = logging.getLogger("diacare")
 
 # Resilient Multi-Model Cascade
 CANDIDATE_GEMINI_MODELS = [
-    "gemini-3.5-flash",
-    "gemini-3.5-flash-lite",
-    "gemini-3.1-flash-lite",
-    "gemini-flash-lite-latest",
+    "gemini-1.5-flash",
+    "gemini-2.0-flash",
+    "gemini-1.5-pro",
+    "gemini-flash-latest",
 ]
 
 CLINICAL_SYSTEM_INSTRUCTION = """You are Dr. Medo (Medo AI), a compassionate, highly knowledgeable, and responsible Healthcare Clinical Assistant & Diabetes Specialist. You are part of the DiabetesGuard AI medical research platform.
@@ -106,38 +106,36 @@ async def call_gemini(
 
     last_error_msg = ""
 
-    # Try each candidate model in the cascade with fast retry
+    # Try candidate models in cascade with fast fallback
     for model_name in CANDIDATE_GEMINI_MODELS:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={GEMINI_API_KEY}"
-        for attempt in range(2):
-            try:
-                async with httpx.AsyncClient(timeout=30.0) as client:
-                    resp = await client.post(url, json=payload)
-                    
-                    if resp.status_code == 200:
-                        data = resp.json()
-                        try:
-                            reply = data["candidates"][0]["content"]["parts"][0]["text"]
-                            logger.info(f"Gemini response generated successfully using model: {model_name}")
-                            return reply
-                        except (KeyError, IndexError) as parse_err:
-                            logger.warning(f"Failed to parse candidate content from {model_name}: {parse_err}")
-                            break
-                    
-                    # If high demand (503) or rate limit (429), retry briefly or cascade to next model
-                    if resp.status_code in (503, 429):
-                        logger.warning(f"Model {model_name} returned {resp.status_code} (attempt {attempt + 1}). Trying cascade fallback...")
-                        last_error_msg = f"{model_name}: {resp.status_code}"
-                        await asyncio.sleep(1.0)
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(url, json=payload)
+                
+                if resp.status_code == 200:
+                    data = resp.json()
+                    try:
+                        reply = data["candidates"][0]["content"]["parts"][0]["text"]
+                        logger.info(f"Gemini response generated successfully using model: {model_name}")
+                        return reply
+                    except (KeyError, IndexError) as parse_err:
+                        logger.warning(f"Failed to parse candidate content from {model_name}: {parse_err}")
                         continue
-                    else:
-                        logger.warning(f"Model {model_name} returned HTTP {resp.status_code}: {resp.text[:120]}")
-                        last_error_msg = f"{model_name} HTTP {resp.status_code}"
-                        break
-            except Exception as e:
-                logger.warning(f"Error calling {model_name}: {e}")
-                last_error_msg = str(e)
-                break
+                
+                # If high demand (503) or rate limit (429), cascade to next model
+                if resp.status_code in (503, 429):
+                    logger.warning(f"Model {model_name} returned {resp.status_code}. Cascading to next model...")
+                    last_error_msg = f"{model_name}: {resp.status_code}"
+                    continue
+                else:
+                    logger.warning(f"Model {model_name} returned HTTP {resp.status_code}: {resp.text[:120]}")
+                    last_error_msg = f"{model_name} HTTP {resp.status_code}"
+                    continue
+        except Exception as e:
+            logger.warning(f"Error calling {model_name}: {e}")
+            last_error_msg = str(e)
+            continue
 
     raise RuntimeError(f"All Gemini models in cascade currently unavailable ({last_error_msg}).")
 
@@ -409,7 +407,11 @@ async def chat_with_diacare(
 
     full_prompt += f"User Question: {user_message}\n\nPlease provide a clear, empathetic, source-backed answer with practical diabetes guidance:"
 
-    ai_reply = await call_gemini(full_prompt)
+    try:
+        ai_reply = await call_gemini(full_prompt)
+    except Exception as exc:
+        logger.warning(f"External Gemini call failed ({exc}). Activating Dr. Medo clinical fallback engine.")
+        ai_reply = get_clinical_fallback_reply(user_message, report_context)
 
     # Attach relevant citations
     citations = [

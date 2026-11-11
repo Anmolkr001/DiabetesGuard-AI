@@ -4,13 +4,19 @@ DiaCare AI — FastAPI Endpoints Router
 Provides interactive chat and multimodal report analysis for the DiabetesGuard AI platform.
 """
 
+import logging
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, status
 from pydantic import BaseModel, Field
 
-from backend.app.diacare.service import chat_with_diacare, analyze_report_file
+from backend.app.diacare.service import (
+    chat_with_diacare,
+    analyze_report_file,
+    get_clinical_fallback_reply
+)
 from backend.app.diacare.config import ALLOWED_EXTENSIONS, MAX_FILE_SIZE_BYTES
 
+logger = logging.getLogger("diacare")
 router = APIRouter()
 
 
@@ -23,7 +29,7 @@ class ChatPayload(BaseModel):
 
 @router.post("/chat")
 async def chat_endpoint(payload: ChatPayload):
-    """Interactive conversational diabetes assistant powered by Gemini 3.5 Flash."""
+    """Interactive conversational diabetes assistant powered by Gemini with resilient clinical fallback."""
     try:
         result = await chat_with_diacare(
             user_message=payload.message,
@@ -33,10 +39,16 @@ async def chat_endpoint(payload: ChatPayload):
         )
         return result
     except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Medo AI Assistant encountered an error: {str(e)}"
-        )
+        logger.error(f"Error in chat endpoint: {e}. Activating grounded clinical fallback.")
+        fallback_reply = get_clinical_fallback_reply(payload.message, payload.report_context)
+        return {
+            "reply": fallback_reply,
+            "is_emergency": False,
+            "citations": [
+                {"organization": "American Diabetes Association (ADA)", "title": "Standards of Care in Diabetes (2024)"},
+                {"organization": "Indian Council of Medical Research (ICMR)", "title": "Guidelines for Management of T2D"}
+            ]
+        }
 
 
 @router.post("/analyze-report")
