@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart3, TrendingUp, ShieldAlert, Award } from 'lucide-react';
+import { BarChart3, TrendingUp, ShieldAlert, Award, ArrowRight } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { GlassButton } from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 
 const ModelAnalytics = () => {
@@ -30,14 +31,25 @@ const ModelAnalytics = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-      <div className="pb-6 border-b border-slate-200">
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center">
-          <BarChart3 className="w-6 h-6 mr-2 text-primary-600" />
-          Model Benchmarks & Scientific Analytics
-        </h1>
-        <p className="text-xs text-slate-500 mt-1">
-          Empirical evaluation results strictly measured on untouched, locked held-out test splits with probability calibration
-        </p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-slate-200 gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 flex items-center">
+            <BarChart3 className="w-6 h-6 mr-2 text-primary-600" />
+            Model Benchmarks & Scientific Analytics
+          </h1>
+          <p className="text-xs text-slate-500 mt-1">
+            Empirical evaluation results strictly measured on untouched, locked held-out test splits with probability calibration
+          </p>
+        </div>
+        <GlassButton
+          to="/clinical"
+          variant="primary"
+          size="sm"
+          className="rounded-xl font-bold shadow-md"
+        >
+          <span>Launch Screener</span>
+          <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
+        </GlassButton>
       </div>
 
       {/* Comparative Bar Chart */}

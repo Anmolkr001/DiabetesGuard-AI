@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { History, FileText, Filter } from 'lucide-react';
+import { History, FileText, Filter, Plus } from 'lucide-react';
+import { GlassButton } from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 
 const AssessmentHistory = () => {
@@ -38,18 +39,29 @@ const AssessmentHistory = () => {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Filter className="w-4 h-4 text-slate-400" />
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="text-xs font-semibold px-3 py-1.5 bg-white border border-slate-300 rounded-xl focus:outline-none"
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <Filter className="w-4 h-4 text-slate-400" />
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="text-xs font-semibold px-3 py-1.5 bg-white border border-slate-300 rounded-xl focus:outline-none"
+            >
+              <option value="all">All Tracks</option>
+              <option value="pima_clinical">Clinical (PIMA)</option>
+              <option value="cdc_lifestyle">Lifestyle (CDC)</option>
+              <option value="uci_symptoms">Symptoms (UCI)</option>
+            </select>
+          </div>
+          <GlassButton
+            to="/clinical"
+            variant="primary"
+            size="sm"
+            className="rounded-xl font-bold shadow-md"
           >
-            <option value="all">All Tracks</option>
-            <option value="pima_clinical">Clinical (PIMA)</option>
-            <option value="cdc_lifestyle">Lifestyle (CDC)</option>
-            <option value="uci_symptoms">Symptoms (UCI)</option>
-          </select>
+            <Plus className="w-3.5 h-3.5 mr-1" />
+            <span>New Assessment</span>
+          </GlassButton>
         </div>
       </div>
 
@@ -57,8 +69,16 @@ const AssessmentHistory = () => {
         {loading ? (
           <div className="p-8 text-center text-xs text-slate-400">Loading audit records...</div>
         ) : filteredHistory.length === 0 ? (
-          <div className="p-12 text-center text-xs text-slate-400">
-            No assessment records match this filter.
+          <div className="p-12 text-center text-xs text-slate-500 space-y-3">
+            <p>No assessment records match this filter.</p>
+            <GlassButton
+              to="/clinical"
+              variant="light"
+              size="sm"
+              className="rounded-xl font-bold"
+            >
+              Start Clinical Assessment
+            </GlassButton>
           </div>
         ) : (
           <div className="overflow-x-auto">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AlertCircle, ArrowRight, ArrowLeft, ShieldAlert, Info } from 'lucide-react';
+import { GlassButton } from '../components/GlassButton';
 import { assessmentService } from '../services/api';
 import { formatErrorMessage } from '../utils/formatError';
 
@@ -119,28 +120,24 @@ const SymptomAssessment = () => {
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Biological Sex</label>
             <div className="flex items-center space-x-2 pt-0.5">
-              <button
+              <GlassButton
                 type="button"
                 onClick={() => setFormData({ ...formData, gender: 0 })}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
-                  formData.gender === 0
-                    ? 'bg-amber-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
-                }`}
+                variant={formData.gender === 0 ? 'warning' : 'light'}
+                size="sm"
+                className="flex-1 rounded-xl font-bold"
               >
                 <span>👩 Female</span>
-              </button>
-              <button
+              </GlassButton>
+              <GlassButton
                 type="button"
                 onClick={() => setFormData({ ...formData, gender: 1 })}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
-                  formData.gender === 1
-                    ? 'bg-amber-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
-                }`}
+                variant={formData.gender === 1 ? 'warning' : 'light'}
+                size="sm"
+                className="flex-1 rounded-xl font-bold"
               >
                 <span>👨 Male</span>
-              </button>
+              </GlassButton>
             </div>
           </div>
         </div>
@@ -174,14 +171,16 @@ const SymptomAssessment = () => {
         </div>
 
         <div className="pt-4 border-t border-slate-100 flex justify-end">
-          <button
+          <GlassButton
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm rounded-xl flex items-center shadow-md disabled:opacity-50 transition"
+            variant="warning"
+            size="lg"
+            className="rounded-xl font-bold shadow-lg shadow-amber-500/25"
           >
-            {loading ? 'Evaluating Symptoms...' : 'Run Symptom Triage Evaluation'}
+            <span>{loading ? 'Evaluating Symptoms...' : 'Run Symptom Triage Evaluation'}</span>
             <ArrowRight className="ml-2 w-4 h-4" />
-          </button>
+          </GlassButton>
         </div>
       </form>
     </div>

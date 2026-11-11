@@ -45,3 +45,4 @@ const BackgroundBlobs = () => {
 };
 
 export default BackgroundBlobs;
+

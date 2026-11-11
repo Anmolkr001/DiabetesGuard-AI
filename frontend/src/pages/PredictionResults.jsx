@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import RiskGauge from '../components/RiskGauge';
 import ShapWaterfallChart from '../components/ShapWaterfallChart';
+import { GlassButton } from '../components/GlassButton';
 
 const PredictionResults = () => {
   const location = useLocation();
@@ -49,18 +50,24 @@ const PredictionResults = () => {
         </div>
 
         <div className="flex items-center space-x-2">
-          <button
+          <GlassButton
             onClick={() => window.print()}
-            className="inline-flex items-center text-xs font-semibold text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition shadow-sm"
+            variant="light"
+            size="sm"
+            className="rounded-xl font-semibold shadow-sm"
           >
-            <Printer className="w-3.5 h-3.5 mr-1.5" /> Print / Save PDF
-          </button>
-          <Link
+            <Printer className="w-3.5 h-3.5 mr-1.5" />
+            <span>Print / Save PDF</span>
+          </GlassButton>
+          <GlassButton
             to="/"
-            className="inline-flex items-center text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition"
+            variant="light"
+            size="sm"
+            className="rounded-xl font-semibold shadow-sm"
           >
-            <ArrowLeft className="w-3.5 h-3.5 mr-1.5" /> Back to Dashboard
-          </Link>
+            <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
+            <span>Back to Dashboard</span>
+          </GlassButton>
         </div>
       </div>
 
@@ -146,67 +153,57 @@ const PredictionResults = () => {
             </div>
           </div>
 
-          {/* Navigation Tabs */}
+          {/* Navigation Tabs (GlassButton) */}
           <div className="flex flex-wrap gap-2 mt-6">
-            <button
+            <GlassButton
               onClick={() => setActiveTab('consume')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
-                activeTab === 'consume'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+              variant={activeTab === 'consume' ? 'success' : 'light'}
+              size="sm"
+              className="rounded-xl font-bold"
             >
-              <Utensils className="w-3.5 h-3.5" />
+              <Utensils className="w-3.5 h-3.5 mr-1.5" />
               <span>🥗 What to Consume</span>
-            </button>
+            </GlassButton>
 
-            <button
+            <GlassButton
               onClick={() => setActiveTab('avoid')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
-                activeTab === 'avoid'
-                  ? 'bg-rose-600 text-white shadow-md shadow-rose-600/20'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+              variant={activeTab === 'avoid' ? 'warning' : 'light'}
+              size="sm"
+              className="rounded-xl font-bold"
             >
-              <Ban className="w-3.5 h-3.5" />
+              <Ban className="w-3.5 h-3.5 mr-1.5" />
               <span>🚫 What to Avoid</span>
-            </button>
+            </GlassButton>
 
-            <button
+            <GlassButton
               onClick={() => setActiveTab('lifestyle')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
-                activeTab === 'lifestyle'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+              variant={activeTab === 'lifestyle' ? 'primary' : 'light'}
+              size="sm"
+              className="rounded-xl font-bold"
             >
-              <Dumbbell className="w-3.5 h-3.5" />
+              <Dumbbell className="w-3.5 h-3.5 mr-1.5" />
               <span>🏃 Exercise & Daily Routine</span>
-            </button>
+            </GlassButton>
 
-            <button
+            <GlassButton
               onClick={() => setActiveTab('labGuide')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
-                activeTab === 'labGuide'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+              variant={activeTab === 'labGuide' ? 'primary' : 'light'}
+              size="sm"
+              className="rounded-xl font-bold"
             >
-              <BookOpen className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5 mr-1.5" />
               <span>🔬 How to Read Your Lab Report</span>
-            </button>
+            </GlassButton>
 
-            <button
+            <GlassButton
               onClick={() => setActiveTab('clinicalNext')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
-                activeTab === 'clinicalNext'
-                  ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+              variant={activeTab === 'clinicalNext' ? 'warning' : 'light'}
+              size="sm"
+              className="rounded-xl font-bold"
             >
-              <Stethoscope className="w-3.5 h-3.5" />
+              <Stethoscope className="w-3.5 h-3.5 mr-1.5" />
               <span>🩺 Clinical Next Steps</span>
-            </button>
+            </GlassButton>
           </div>
         </div>
 
@@ -523,18 +520,24 @@ const PredictionResults = () => {
 
       {/* Action Buttons */}
       <div className="flex flex-wrap justify-between items-center gap-4 pt-4">
-        <Link
+        <GlassButton
           to="/history"
-          className="text-xs font-semibold text-primary-700 hover:text-primary-800 flex items-center"
+          variant="light"
+          size="sm"
+          className="rounded-xl font-semibold shadow-sm"
         >
-          <FileText className="w-4 h-4 mr-1.5" /> View in Assessment History Log
-        </Link>
-        <Link
+          <FileText className="w-4 h-4 mr-1.5" />
+          <span>View in Assessment History Log</span>
+        </GlassButton>
+        <GlassButton
           to={result.track_code === 'pima_clinical' ? '/clinical' : result.track_code === 'cdc_lifestyle' ? '/lifestyle' : '/symptoms'}
-          className="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold hover:bg-slate-800 transition"
+          variant="primary"
+          size="md"
+          className="rounded-xl font-bold shadow-lg"
         >
-          <RefreshCw className="w-3.5 h-3.5 mr-1.5" /> Repeat Assessment
-        </Link>
+          <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
+          <span>Repeat Assessment</span>
+        </GlassButton>
       </div>
     </div>
   );
