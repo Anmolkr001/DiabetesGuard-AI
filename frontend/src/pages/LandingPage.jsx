@@ -137,78 +137,77 @@ const StethoOrb = ({ className = '' }) => (
 );
 
 
-/* ─── 3D Converging Title Letters ─── */
+/* ─── 3D Sequential Letter-by-Letter Title ─── */
 const ConvergingTitle = () => {
   const [animKey, setAnimKey] = useState(0);
   const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     setSettled(false);
-    const timer = setTimeout(() => setSettled(true), 1150);
+    // All 13 letters finish arriving sequentially around 2.1s
+    const timer = setTimeout(() => setSettled(true), 2150);
     return () => clearTimeout(timer);
   }, [animKey]);
 
-  const word1Config = [
-    { char: 'D', anim: 'convergeFromLeftWide', delay: 0.04 },
-    { char: 'I', anim: 'convergeFromLeftMid', delay: 0.08 },
-    { char: 'A', anim: 'convergeFromLeftClose', delay: 0.12 },
-    { char: 'B', anim: 'convergeFromLeftClose', delay: 0.16 },
-    { char: 'E', anim: 'convergeFromRightClose', delay: 0.16 },
-    { char: 'T', anim: 'convergeFromRightClose', delay: 0.12 },
-    { char: 'E', anim: 'convergeFromRightMid', delay: 0.08 },
-    { char: 'S', anim: 'convergeFromRightWide', delay: 0.04 },
-  ];
+  const word1 = ['D', 'I', 'A', 'B', 'E', 'T', 'E', 'S'];
+  const word2 = ['G', 'U', 'A', 'R', 'D'];
 
-  const word2Config = [
-    { char: 'G', anim: 'convergeFromLeftWide', delay: 0.24 },
-    { char: 'U', anim: 'convergeFromLeftMid', delay: 0.28 },
-    { char: 'A', anim: 'convergeCenterDrop', delay: 0.32 },
-    { char: 'R', anim: 'convergeFromRightMid', delay: 0.28 },
-    { char: 'D', anim: 'convergeFromRightWide', delay: 0.24 },
-  ];
+  // Real 3D Extrusion Layered Shadows
+  const textShadow3DWord1 = '0 1px 0 #e2e8f0, 0 2px 0 #cbd5e1, 0 3px 0 #94a3b8, 0 4px 0 #64748b, 0 5px 0 #475569, 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 45px rgba(99, 102, 241, 0.35)';
+  const textShadow3DWord2 = '0 1px 0 #38bdf8, 0 2px 0 #0284c7, 0 3px 0 #2563eb, 0 4px 0 #1d4ed8, 0 5px 0 #0f172a, 0 8px 22px rgba(14, 165, 233, 0.5), 0 0 50px rgba(99, 102, 241, 0.4)';
 
   return (
     <div
       key={animKey}
       onClick={() => setAnimKey((k) => k + 1)}
-      className="cursor-pointer select-none group relative py-2"
-      title="Click title to replay assembly"
+      className="cursor-pointer select-none group relative py-3"
+      title="Click title to replay 3D letter assembly"
       style={{ perspective: '1400px' }}
     >
-      <h1 className="text-[3.4rem] sm:text-[5rem] md:text-[6.5rem] lg:text-[7.8rem] font-black leading-[0.9] tracking-tighter">
-        {/* ROW 1: DIABETES */}
-        <div className={`flex justify-center items-center overflow-visible ${settled ? '' : 'animate-converge-row-down'}`}>
-          {word1Config.map((item, index) => (
-            <span
-              key={`w1-${index}`}
-              className="inline-block text-white"
-              style={{
-                animation: settled ? 'none' : `${item.anim} 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s both`,
-                textShadow: '0 4px 30px rgba(99,102,241,0.35), 0 0 70px rgba(99,102,241,0.2)',
-                display: 'inline-block',
-              }}
-            >
-              {item.char}
-            </span>
-          ))}
+      <h1 className="text-[3.4rem] sm:text-[5rem] md:text-[6.5rem] lg:text-[7.8rem] font-black leading-[0.92] tracking-tight">
+        {/* ROW 1: DIABETES (Appears letter by letter) */}
+        <div className="flex justify-center items-center overflow-visible">
+          {word1.map((char, index) => {
+            const delay = 0.06 + index * 0.09;
+            return (
+              <span
+                key={`w1-${index}`}
+                className="inline-block text-white transition-all duration-300 group-hover:scale-105"
+                style={{
+                  animation: settled
+                    ? 'none'
+                    : `letterPop3D 0.75s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s both`,
+                  textShadow: textShadow3DWord1,
+                  display: 'inline-block',
+                }}
+              >
+                {char}
+              </span>
+            );
+          })}
         </div>
 
-        {/* ROW 2: GUARD */}
-        <div className={`flex justify-center items-center overflow-visible mt-1 sm:mt-2 ${settled ? '' : 'animate-converge-row-up'}`}>
-          {word2Config.map((item, index) => (
-            <span
-              key={`w2-${index}`}
-              className="inline-block bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent"
-              style={{
-                animation: settled ? 'none' : `${item.anim} 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${item.delay}s both`,
-                WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-                filter: 'drop-shadow(0 4px 20px rgba(56,189,248,0.4))',
-                display: 'inline-block',
-              }}
-            >
-              {item.char}
-            </span>
-          ))}
+        {/* ROW 2: GUARD (Appears sequentially after DIABETES) */}
+        <div className="flex justify-center items-center overflow-visible mt-2 sm:mt-3">
+          {word2.map((char, index) => {
+            const delay = 0.85 + index * 0.10;
+            return (
+              <span
+                key={`w2-${index}`}
+                className="inline-block bg-gradient-to-b from-sky-300 via-sky-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 group-hover:scale-105"
+                style={{
+                  animation: settled
+                    ? 'none'
+                    : `letterPop3D 0.75s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s both`,
+                  WebkitTextStroke: '1px rgba(255, 255, 255, 0.08)',
+                  textShadow: textShadow3DWord2,
+                  display: 'inline-block',
+                }}
+              >
+                {char}
+              </span>
+            );
+          })}
         </div>
       </h1>
     </div>
