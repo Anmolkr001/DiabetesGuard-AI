@@ -4,6 +4,7 @@ import {
   Stethoscope, HeartPulse, AlertCircle, ShieldCheck, CheckCircle2,
   ChevronRight, BarChart2, Brain, Activity, Zap, Lock, Sparkles, Bot
 } from 'lucide-react';
+import { DiaCareAvatar } from '../components/DiaCareChatbot';
 
 /* ─── 3D Tilt Card ─── */
 const TiltCard = ({ children, className = '' }) => {
@@ -374,13 +375,12 @@ const LandingPage = () => {
             Clinical labs, lifestyle surveys, or symptom presentation — choose your track.
           </p>
 
-          {/* CTA Buttons */}
+          {/* Glassy CTA Buttons */}
           <div className="mt-10 flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
             <Link
               to="/clinical"
-              className="group relative inline-flex items-center px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold text-sm shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/50 hover:-translate-y-1 transition-all duration-300"
+              className="glass-btn-primary group relative inline-flex items-center px-8 py-4 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300"
             >
-              <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative flex items-center">
                 Begin Assessment <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
@@ -388,14 +388,15 @@ const LandingPage = () => {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
-              className="group relative inline-flex items-center px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-600 to-purple-600 text-white font-bold text-sm shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/50 hover:-translate-y-1 transition-all duration-300"
+              className="glass-btn group relative inline-flex items-center px-7 py-3.5 rounded-full text-white font-bold text-sm shadow-xl transition-all duration-300 hover:border-sky-300/60 cursor-pointer"
             >
-              <Bot className="mr-2 w-5 h-5 text-sky-200" />
+              <DiaCareAvatar size={24} className="mr-2.5" />
               <span>Ask DiaCare AI</span>
+              <span className="ml-2 w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
             </button>
             <Link
               to="/analytics"
-              className="inline-flex items-center px-8 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md text-white/90 font-bold text-sm hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+              className="glass-btn inline-flex items-center px-7 py-3.5 rounded-full text-white/90 font-bold text-sm shadow-xl hover:text-white transition-all duration-300"
             >
               <BarChart2 className="mr-2 w-5 h-5 text-indigo-300" /> Model Analytics
             </Link>

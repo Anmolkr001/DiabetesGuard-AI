@@ -2,8 +2,9 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Activity, Shield, BarChart3, History, Info, Stethoscope, HeartPulse,
-  AlertCircle, Sparkles, Bot, ChevronLeft, ChevronRight
+  AlertCircle, ChevronLeft, ChevronRight
 } from 'lucide-react';
+import { DiaCareAvatar } from './DiaCareChatbot';
 
 const Navbar = () => {
   const location = useLocation();
@@ -26,7 +27,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           
-          {/* Logo with 3D Glossy Shield + Back/Forward History Buttons */}
+          {/* Logo with 3D Glossy Shield + Glassy Back/Forward Navigation */}
           <div className="flex items-center space-x-3 sm:space-x-4">
             <Link to="/" className="flex items-center space-x-3 group">
               <div
@@ -56,12 +57,12 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Back & Forward History Navigation */}
-            <div className="flex items-center space-x-1 pl-2 sm:pl-3 border-l border-white/10">
+            {/* Glassy Back & Forward History Navigation */}
+            <div className="flex items-center space-x-1.5 pl-2 sm:pl-3 border-l border-white/10">
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 active:scale-90 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/10 shadow-sm"
+                className="glass-btn w-8 h-8 rounded-xl flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
                 title="Go Back"
                 aria-label="Go Back"
               >
@@ -70,7 +71,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => navigate(1)}
-                className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 active:scale-90 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-white/10 shadow-sm"
+                className="glass-btn w-8 h-8 rounded-xl flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
                 title="Go Forward"
                 aria-label="Go Forward"
               >
@@ -90,7 +91,7 @@ const Navbar = () => {
                   to={link.path}
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-indigo-500 to-blue-500 text-white shadow-md shadow-indigo-500/25'
+                      ? 'bg-gradient-to-r from-indigo-500 to-blue-500 text-white shadow-md shadow-indigo-500/25 border border-indigo-400/40'
                       : 'text-slate-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -100,15 +101,16 @@ const Navbar = () => {
               );
             })}
 
-            {/* Special DiaCare AI Button */}
+            {/* Special Glassy DiaCare AI Button */}
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
-              className="flex items-center space-x-1.5 ml-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 border bg-indigo-500/20 text-sky-300 border-indigo-400/40 hover:bg-indigo-500/35 hover:text-white"
+              className="glass-btn-primary flex items-center space-x-2 ml-2 px-3.5 py-1.5 rounded-xl text-xs font-bold text-white transition-all cursor-pointer"
+              title="Open DiaCare AI Medical Assistant"
             >
-              <Bot className="w-3.5 h-3.5 text-sky-300" />
+              <DiaCareAvatar size={20} />
               <span>DiaCare AI</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
             </button>
           </nav>
         </div>

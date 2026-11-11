@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, Stethoscope, HeartPulse, AlertCircle, History, BarChart3, ArrowRight, ShieldCheck, Bot, Sparkles, FileText } from 'lucide-react';
+import { Activity, Stethoscope, HeartPulse, AlertCircle, History, BarChart3, ArrowRight, ShieldCheck, Sparkles, FileText } from 'lucide-react';
+import { DiaCareAvatar } from '../components/DiaCareChatbot';
 import { assessmentService } from '../services/api';
 
 const Dashboard = () => {
@@ -42,23 +43,24 @@ const Dashboard = () => {
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/clinical"
-              className="px-4 py-2 bg-primary-600 hover:bg-primary-500 rounded-xl text-xs font-semibold shadow-md transition"
+              className="glass-btn-primary px-5 py-2.5 rounded-full text-xs font-bold text-white shadow-lg transition"
             >
               Start Clinical Test
             </Link>
             <Link
               to="/lifestyle"
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-semibold backdrop-blur-md transition border border-white/20"
+              className="glass-btn px-5 py-2.5 rounded-full text-xs font-bold text-white/90 shadow-md hover:text-white transition"
             >
               Start Lifestyle Survey
             </Link>
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent('open-diacare'))}
-              className="px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 rounded-xl text-xs font-semibold shadow-md shadow-indigo-500/30 transition flex items-center space-x-1.5"
+              className="glass-btn px-5 py-2.5 rounded-full text-xs font-bold text-white transition flex items-center space-x-2 border-sky-400/40 hover:border-sky-300 cursor-pointer shadow-lg"
             >
-              <Bot className="w-3.5 h-3.5" />
+              <DiaCareAvatar size={18} />
               <span>Ask DiaCare AI</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </button>
           </div>
         </div>
