@@ -40,7 +40,7 @@ async def chat_endpoint(payload: ChatPayload):
         return result
     except Exception as e:
         logger.error(f"Error in chat endpoint: {e}. Activating grounded clinical fallback.")
-        fallback_reply = get_clinical_fallback_reply(payload.message, payload.report_context)
+        fallback_reply = get_clinical_fallback_reply(payload.message, payload.report_context, payload.history)
         return {
             "reply": fallback_reply,
             "is_emergency": False,

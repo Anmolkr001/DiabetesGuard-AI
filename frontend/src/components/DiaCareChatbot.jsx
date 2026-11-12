@@ -13,7 +13,7 @@ import { formatErrorMessage } from '../utils/formatError';
  * Custom 3D Friendly Dr. Medo AI Avatar (Pixar-Style Character)
  * ═══════════════════════════════════════════════════════════════════
  */
-export const DiaCareAvatar = ({ size = 38, className = '' }) => {
+export const DiaCareAvatar = ({ size = 46, className = '' }) => {
   return (
     <div
       className={`relative inline-flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden border-2 border-white/90 bg-gradient-to-tr from-sky-400 via-indigo-500 to-sky-200 shadow-md transition-transform duration-300 ${className}`}
@@ -365,11 +365,11 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           <span>Click to Chat • Drag to Move</span>
         </div>
 
-        {/* 3D Dr. Medo Character Capsule Orb */}
+        {/* 3D Dr. Medo Character Capsule Orb (Enhanced Prominent Sizing) */}
         <div
           onMouseDown={handleLauncherPointerDown}
           onTouchStart={handleLauncherPointerDown}
-          className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-indigo-500 to-pink-500 shadow-2xl transition-transform duration-200 hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
+          className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full p-1.5 bg-gradient-to-tr from-sky-400 via-indigo-500 to-pink-500 shadow-2xl transition-transform duration-200 hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing group-hover:shadow-[0_0_35px_rgba(56,189,248,0.7)]"
           title="Dr. Medo AI • Click to open, drag anywhere on dashboard"
         >
           {/* Radar beacon wave */}
@@ -388,13 +388,13 @@ const DiaCareChatbot = ({ fullPage = false }) => {
           </div>
 
           {/* Live Heartbeat Indicator Dot */}
-          <span className="absolute -top-1 -right-1 flex h-4 w-4 z-20">
+          <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 z-20">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-slate-900 shadow-[0_0_10px_#34d399]" />
+            <span className="relative inline-flex rounded-full h-4.5 w-4.5 bg-emerald-500 border-2 border-slate-900 shadow-[0_0_10px_#34d399]" />
           </span>
 
           {/* Bottom Medo Tag Badge */}
-          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-slate-900/90 border border-sky-400/60 text-[8px] font-black text-sky-300 tracking-wider uppercase z-20 shadow-md whitespace-nowrap">
+          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-sky-400/60 text-[9px] font-black text-sky-300 tracking-wider uppercase z-20 shadow-md whitespace-nowrap">
             DR. MEDO
           </span>
         </div>
@@ -437,9 +437,9 @@ const DiaCareChatbot = ({ fullPage = false }) => {
         <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none" />
 
         <div className="flex items-center space-x-3 relative z-10 pointer-events-none">
-          {/* 3D Dr. Medo Avatar */}
+          {/* 3D Dr. Medo Avatar (Crisp Header Icon) */}
           <div className="relative">
-            <DiaCareAvatar size={42} />
+            <DiaCareAvatar size={50} />
           </div>
 
           <div>
@@ -555,7 +555,7 @@ const DiaCareChatbot = ({ fullPage = false }) => {
             className={`flex items-start space-x-2.5 ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             {m.sender === 'assistant' && (
-              <DiaCareAvatar size={30} className="flex-shrink-0 mt-0.5" />
+              <DiaCareAvatar size={36} className="flex-shrink-0 mt-0.5" />
             )}
 
             <div

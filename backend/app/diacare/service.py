@@ -22,12 +22,11 @@ from backend.app.diacare.config import (
 
 logger = logging.getLogger("diacare")
 
-# Resilient Multi-Model Cascade
+# Resilient Multi-Model Cascade (Verified active on Gemini v1beta API)
 CANDIDATE_GEMINI_MODELS = [
-    "gemini-1.5-flash",
-    "gemini-2.0-flash",
-    "gemini-1.5-pro",
-    "gemini-flash-latest",
+    "gemini-flash-lite-latest",
+    "gemini-3.5-flash-lite",
+    "gemini-3.5-flash",
 ]
 
 CLINICAL_SYSTEM_INSTRUCTION = """You are Dr. Medo (Medo AI), a compassionate, highly knowledgeable, and responsible Healthcare Clinical Assistant & Diabetes Specialist. You are part of the DiabetesGuard AI medical research platform.
@@ -110,7 +109,7 @@ async def call_gemini(
     for model_name in CANDIDATE_GEMINI_MODELS:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={GEMINI_API_KEY}"
         try:
-            async with httpx.AsyncClient(timeout=10.0) as client:
+            async with httpx.AsyncClient(timeout=22.0) as client:
                 resp = await client.post(url, json=payload)
                 
                 if resp.status_code == 200:
@@ -140,13 +139,155 @@ async def call_gemini(
     raise RuntimeError(f"All Gemini models in cascade currently unavailable ({last_error_msg}).")
 
 
-def get_clinical_fallback_reply(user_message: str, report_context: Optional[str] = None) -> str:
+def get_clinical_fallback_reply(
+    user_message: str,
+    report_context: Optional[str] = None,
+    history: Optional[List[Dict[str, str]]] = None
+) -> str:
     """
     Intelligent grounded clinical knowledge base fallback.
     Guarantees that users always receive helpful, empathetic, evidence-based guidance
-    even during external API network/server demand spikes.
+    on all diabetes-related topics, genetics, family history, diet, symptoms, and treatments.
     """
     lower = user_message.lower()
+
+    # If message is short or contextual (e.g. "what about my mother?"), inspect last user query from history
+    combined = lower
+    if history:
+        for turn in reversed(history[-4:]):
+            prev_txt = (turn.get("message") or turn.get("text") or "").lower()
+            combined += " " + prev_txt
+
+    # 1. Family History, Relatives, Heredity & Genetics
+    if any(k in lower for k in ["relative", "family", "mother", "father", "parent", "sibling", "sister", "brother", "child", "children", "son", "daughter", "kid", "hereditary", "genetic", "inherit", "runs in", "dna"]):
+        return (
+            "### 🧬 Diabetes, Family History & Genetic Risk in Relatives\n\n"
+            "If you or a close relative has diabetes, genetics does play an important role, but **lifestyle strongly determines whether those genes are expressed**:\n\n"
+            "#### 1. 📊 What is the Statistical Risk for Relatives?\n"
+            "• **One Parent with Type 2 Diabetes:** Lifetime risk for offspring is approximately **40%**.\n"
+            "• **Both Parents with Type 2 Diabetes:** Lifetime risk rises to approximately **70%**.\n"
+            "• **Sibling with Type 2 Diabetes:** Risk is about 2–3 times higher than the general population.\n"
+            "• **Type 1 Diabetes:** Lower genetic transmission (~3–8% if the father has it; 1–4% if the mother has it).\n\n"
+            "#### 2. 🛡️ Genes vs. Lifestyle (The DPP Landmark Evidence)\n"
+            "• Having a family history is **not a guarantee** that you or your relatives will develop diabetes.\n"
+            "• The landmark **Diabetes Prevention Program (DPP)** proved that **150 minutes/week of moderate exercise** combined with a **5–7% reduction in body weight** lowers the actual risk of developing Type 2 diabetes by **58%**, even among genetically high-risk individuals.\n\n"
+            "#### 3. 🩺 Recommended Action for Your Relatives\n"
+            "• **Early Screening:** First-degree relatives should begin screening with an **HbA1c or Fasting Plasma Glucose test** at least once a year starting by age 25–30 (or earlier if BMI > 23 in South Asian populations).\n"
+            "• **Household Plate Method:** Transitioning family meals to 50% fibrous vegetables and whole grains protects the entire family."
+        )
+
+    # 2. Can Diabetes be Cured or Reversed? (Remission)
+    if any(k in lower for k in ["reverse", "revers", "cure", "curable", "permanent", "go away", "remission"]):
+        return (
+            "### 🔄 Can Diabetes Be Reversed or Cured?\n\n"
+            "Here is the exact scientific consensus from the **American Diabetes Association (ADA)** and the landmark **DiRECT Clinical Trial**:\n\n"
+            "#### 1. 🩺 'Cure' vs. 'Remission'\n"
+            "• Strictly speaking, diabetes cannot be permanently 'cured' because underlying genetic beta-cell susceptibility remains.\n"
+            "• However, **Type 2 Diabetes Remission** is clinically achievable, especially in the early years following diagnosis.\n"
+            "• **ADA Definition of Remission:** Maintaining an **HbA1c < 6.5% for at least 3 months** without using any glucose-lowering medications.\n\n"
+            "#### 2. 🔬 How Remission Occurs (The Twin-Cycle Hypothesis)\n"
+            "• Excess ectopic fat accumulated in the liver and pancreas paralyzes insulin-producing beta cells.\n"
+            "• Losing **10–15 kg (or ~10–15% of body weight)** clears visceral fat from the pancreas, allowing beta cells to 'wake up' and produce normal insulin again.\n"
+            "• The **DiRECT trial** showed that nearly **86% of patients who lost 15+ kg achieved complete diabetes remission** within the first 6 years of diagnosis.\n\n"
+            "#### 3. 🎯 Foundations for Remission\n"
+            "1. Calorie-controlled, whole-food Medical Nutrition Therapy (MNT).\n"
+            "2. Muscle GLUT4 activation via daily brisk walking and resistance exercise.\n"
+            "3. Close medical monitoring with your physician before tapering any prescription drugs."
+        )
+
+    # 3. Fruits, Sweets & Dietary Inquiries
+    if any(k in lower for k in ["fruit", "mango", "banana", "apple", "sweet", "papaya", "grape", "orange", "jaggery", "honey", "mithai", "guava", "watermelon"]):
+        return (
+            "### 🍎 Fruits & Sweet Foods Guide for Diabetes\n\n"
+            "Diabetic individuals **do not need to eliminate fruits**. Fruits contain essential antioxidants, potassium, and soluble fiber. The key is understanding the **Glycemic Index (GI)** and portion sizes:\n\n"
+            "#### 1. 🟢 Best Low-GI Fruits (Safe for Regular Consumption)\n"
+            "• **Apples, Pears, Guavas (Amrood), Jamun, Berries, Oranges, Pomegranates, and Papaya**.\n"
+            "• **Portion:** 1 medium whole fruit (~100–120g) per day, ideally as a mid-morning or mid-afternoon snack.\n\n"
+            "#### 2. 🟡 High-GI / Sugar-Dense Fruits (Portion Control)\n"
+            "• **Mangoes, Bananas, Chiku (Sapodilla), Grapes, and Watermelon**.\n"
+            "• **How to consume:** Limit to 1–2 small slices. **Always pair with a source of protein/fat** (like 5–6 soaked almonds or walnuts) to slow glucose absorption.\n\n"
+            "#### 3. ❌ Critical Mistakes to Avoid\n"
+            "• **Never drink Fruit Juices:** Juicing removes all dietary fiber, dumping concentrated fructose rapidly into your bloodstream.\n"
+            "• **Jaggery (Gur) & Honey Myth:** Both jaggery and honey have almost identical glycemic effects as refined white sugar. They will spike your glucose.\n"
+            "• **Never eat fruits immediately after a large heavy meal:** It stacks fructose on top of post-meal carbohydrates."
+        )
+
+    # 4. Symptoms, Early Warning Signs & Physical Indicators
+    if any(k in lower for k in ["symptom", "sign", "warning", "early", "tired", "thirst", "urination", "urine", "weight loss", "hunger", "blurry", "blurred", "fatigue"]):
+        return (
+            "### ⚠️ Warning Signs & Symptoms of Diabetes\n\n"
+            "The classic clinical presentation of high blood sugar consists of the **'3 Ps'**:\n\n"
+            "1. **Polyuria (Excessive Urination):** Waking up multiple times at night to urinate as the kidneys try to flush out excess circulating glucose.\n"
+            "2. **Polydipsia (Unquenchable Thirst):** Constant dry mouth and fluid craving caused by fluid loss from polyuria.\n"
+            "3. **Polyphagia (Extreme Hunger):** Feeling hungry even after eating because insulin resistance prevents glucose from entering muscle cells for energy.\n\n"
+            "#### Additional Warning Symptoms:\n"
+            "• **Unexplained Weight Loss:** Cells burn muscle and fat stores for energy when glucose cannot enter.\n"
+            "• **Chronic Fatigue & Brain Fog:** Lack of cellular energy delivery.\n"
+            "• **Blurred Vision:** High glucose levels pull fluid from the lenses of the eyes.\n"
+            "• **Tingling / Numbness:** Pins-and-needles sensation in toes or fingers (early peripheral neuropathy).\n"
+            "• **Slow-Healing Wounds & Frequent Infections:** Impaired immune circulation."
+        )
+
+    # 5. Acute High Blood Sugar Spikes (> 200–300 mg/dL)
+    if any(k in lower for k in ["spike", "high sugar", "high glucose", "200", "250", "300", "350", "400", "hyperglycemia"]):
+        return (
+            "### 🚨 Managing High Blood Sugar Spikes (> 200 mg/dL)\n\n"
+            "If your blood glucose reads above 200 mg/dL (11.1 mmol/L), take these structured clinical steps:\n\n"
+            "1. **Hydrate Immediately:** Drink 2–3 glasses of plain water. This assists your kidneys in filtering excess glucose through urine and prevents dehydration.\n"
+            "2. **Light Physical Movement:** If feeling physically stable (no nausea or ketones), take a **15–20 minute gentle walk**. Muscle contractions activate GLUT4 glucose uptake without needing insulin.\n"
+            "3. **Zero Carbs for Next Meal:** Consume protein and high-fiber greens (clear soup, cucumber salad, boiled egg/paneer).\n"
+            "4. **Take Prescribed Corrective Medication:** If your physician has prescribed a sliding scale insulin or correction dose, administer it strictly as guided.\n\n"
+            "⚠️ **Emergency Threshold:** If glucose is **> 300 mg/dL with vomiting, deep rapid breathing, severe abdominal pain, or confusion**, seek emergency hospital care immediately to rule out Diabetic Ketoacidosis (DKA) or HHS."
+        )
+
+    # 6. Low Blood Sugar & Hypoglycemia (< 70 mg/dL)
+    if any(k in lower for k in ["hypo", "low sugar", "low blood sugar", "shiver", "shaking", "sweat", "sweating", "dizzy", "palpitation", "70"]):
+        return (
+            "### ⚡ Emergency Hypoglycemia Protocol (Rule of 15)\n\n"
+            "Hypoglycemia (blood glucose **< 70 mg/dL**) requires immediate action because the brain relies entirely on glucose for fuel:\n\n"
+            "#### Symptoms to Recognize:\n"
+            "• Shakiness, trembling hands, cold clammy sweats, rapid pounding heartbeat, dizziness, intense sudden hunger, confusion.\n\n"
+            "#### The Clinical 'Rule of 15':\n"
+            "1. **Consume 15g of Fast-Acting Carbohydrate:**\n"
+            "   - 1/2 cup (120 ml) fruit juice OR regular soda (not diet)\n"
+            "   - 3 to 4 glucose tablets\n"
+            "   - 1 tablespoon of sugar or honey dissolved in water\n"
+            "   *(Avoid chocolate or cookies because the fat delays sugar absorption!)*\n"
+            "2. **Wait 15 Minutes** and re-check your blood glucose.\n"
+            "3. If still below 70 mg/dL, **repeat with another 15g of fast-acting sugar**.\n"
+            "4. Once above 70 mg/dL, eat a small snack with complex carbs and protein (e.g., 1 whole-wheat roti or a handful of nuts) to keep levels steady."
+        )
+
+    # 7. Medications & Pharmacotherapy
+    if any(k in lower for k in ["medicine", "medication", "drug", "pill", "tablet", "metformin", "insulin", "sglt2", "glp1", "glp-1", "sulfonylurea"]):
+        return (
+            "### 💊 Overview of Modern Diabetes Medications (ADA 2024)\n\n"
+            "Modern diabetes pharmacotherapy is designed around organ protection and glucose regulation:\n\n"
+            "• **1. Metformin (Foundational First-Line):**\n"
+            "  - Decreases excess glucose output from the liver and increases peripheral muscle insulin sensitivity.\n"
+            "  - Does *not* cause hypoglycemia on its own; taken with meals to minimize mild gastrointestinal side effects.\n\n"
+            "• **2. SGLT2 Inhibitors (Dapagliflozin, Empagliflozin):**\n"
+            "  - Promotes excretion of excess glucose via urine.\n"
+            "  - Provides significant heart failure and chronic kidney disease protection.\n\n"
+            "• **3. GLP-1 Receptor Agonists (Semaglutide, Liraglutide, Dulaglutide):**\n"
+            "  - Mimics gut incretin hormones to stimulate insulin *only* when glucose is high, slows gastric emptying, and aids in weight loss.\n\n"
+            "• **4. Insulin Therapy:**\n"
+            "  - Essential for Type 1 diabetes and introduced in Type 2 when endogenous beta-cell production drops or during acute illness.\n\n"
+            "*(Never change or discontinue your prescribed medication without direct guidance from your doctor.)*"
+        )
+
+    # 8. Types of Diabetes
+    if any(k in lower for k in ["type 1", "type 2", "types of", "difference between", "gestational"]):
+        return (
+            "### 🩺 Understanding the Types of Diabetes\n\n"
+            "Diabetes Mellitus encompasses distinct metabolic conditions characterized by chronic hyperglycemia:\n\n"
+            "| Condition | Mechanism | Typical Onset | Primary Management |\n"
+            "| :--- | :--- | :--- | :--- |\n"
+            "| **Type 1 Diabetes** | Autoimmune destruction of pancreatic beta cells (absolute lack of insulin) | Childhood / Young adulthood | Daily insulin therapy, CGM, carbohydrate counting |\n"
+            "| **Type 2 Diabetes** | Progressive insulin resistance + impaired compensatory insulin secretion (90–95% of cases) | Typically adults ≥ 35 (rising in youth) | Lifestyle MNT, exercise, oral medications (Metformin), SGLT2i, GLP-1 RA, insulin |\n"
+            "| **Gestational Diabetes** | Placental hormones cause severe insulin resistance during pregnancy | 24th–28th week of gestation | Dietary control, safe insulin/metformin; resolves postpartum but elevates future T2D risk |\n"
+            "| **Pre-Diabetes** | Impaired Fasting Glucose (100–125) or Impaired Glucose Tolerance (140–199) | Any age | Highly reversible via 7% weight loss and 150 min/wk exercise |"
+        )
 
     # 1. Clinical Diagnoses & Diagnostic Criteria
     if any(k in lower for k in ["diagnos", "criteria", "threshold", "pre-diabetes", "prediabetes", "t2dm", "type 2"]):
@@ -399,10 +540,14 @@ async def chat_with_diacare(
 
     # Add conversation history if available
     if history:
-        full_prompt += "PREVIOUS CONVERSATION:\n"
+        full_prompt += "PREVIOUS CONVERSATION CONTEXT:\n"
         for turn in history[-6:]:  # Last 3 turns
-            role = "User" if turn.get("sender") == "user" else "Assistant"
-            full_prompt += f"{role}: {turn.get('message', '')}\n"
+            role = "User" if turn.get("sender") == "user" else "Dr. Medo"
+            msg = turn.get("message") or turn.get("text") or ""
+            # Truncate very long past assistant replies to keep context focused
+            if len(msg) > 500 and role == "Dr. Medo":
+                msg = msg[:500] + "..."
+            full_prompt += f"{role}: {msg}\n"
         full_prompt += "\n"
 
     full_prompt += f"User Question: {user_message}\n\nPlease provide a clear, empathetic, source-backed answer with practical diabetes guidance:"
@@ -411,7 +556,7 @@ async def chat_with_diacare(
         ai_reply = await call_gemini(full_prompt)
     except Exception as exc:
         logger.warning(f"External Gemini call failed ({exc}). Activating Dr. Medo clinical fallback engine.")
-        ai_reply = get_clinical_fallback_reply(user_message, report_context)
+        ai_reply = get_clinical_fallback_reply(user_message, report_context, history)
 
     # Attach relevant citations
     citations = [

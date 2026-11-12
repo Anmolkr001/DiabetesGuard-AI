@@ -119,8 +119,101 @@ const saveLocalAssessment = (item) => {
 // ─────────────────────────────────────────────────────────────
 // CLIENT-SIDE DR. MEDO CLINICAL REASONING (OFFLINE / PREVIEW)
 // ─────────────────────────────────────────────────────────────
-const getClientDrMedoReply = (userMessage = '') => {
+const getClientDrMedoReply = (userMessage = '', history = []) => {
   const lower = userMessage.toLowerCase();
+
+  // 1. Family History, Relatives, Heredity & Genetics
+  if (['relative', 'family', 'mother', 'father', 'parent', 'sibling', 'sister', 'brother', 'child', 'children', 'son', 'daughter', 'kid', 'hereditary', 'genetic', 'inherit', 'runs in', 'dna'].some(k => lower.includes(k))) {
+    return (
+      "### 🧬 Diabetes, Family History & Genetic Risk in Relatives\n\n" +
+      "If you or a close family member has diabetes, genetics plays an important role, but **lifestyle strongly determines whether those genes are expressed**:\n\n" +
+      "#### 1. 📊 Statistical Risk for Relatives (ADA Data)\n" +
+      "• **One Parent with Type 2 Diabetes:** Offspring lifetime risk is approximately **40%**.\n" +
+      "• **Both Parents with Type 2 Diabetes:** Lifetime risk rises to approximately **70%**.\n" +
+      "• **Sibling with Type 2 Diabetes:** Risk is ~2–3 times higher than the general population.\n" +
+      "• **Type 1 Diabetes:** Lower transmission (~3–8% from father, 1–4% from mother).\n\n" +
+      "#### 2. 🛡️ Genes vs. Lifestyle (The DPP Landmark Evidence)\n" +
+      "• Having family history is **not a guarantee** of developing diabetes.\n" +
+      "• The landmark **Diabetes Prevention Program (DPP)** proved that **150 min/week of exercise** combined with a **5–7% reduction in body weight** reduces risk by **58%**, even among genetically high-risk individuals.\n\n" +
+      "#### 3. 🩺 Action for Your Relatives\n" +
+      "• **Annual Screening:** First-degree relatives should screen with an **HbA1c or Fasting Glucose test** annually starting by age 25–30 (earlier if BMI > 23).\n" +
+      "• **Adopt Family Plate Method:** Transition family meals to 50% fibrous vegetables and whole grains."
+    );
+  }
+
+  // 2. Can Diabetes be Cured or Reversed? (Remission)
+  if (['reverse', 'revers', 'cure', 'curable', 'permanent', 'go away', 'remission'].some(k => lower.includes(k))) {
+    return (
+      "### 🔄 Can Diabetes Be Reversed or Cured?\n\n" +
+      "According to the **American Diabetes Association (ADA)** and the landmark **DiRECT Clinical Trial**:\n\n" +
+      "#### 1. 🩺 'Cure' vs. 'Remission'\n" +
+      "• Diabetes cannot be permanently 'cured' because genetic beta-cell susceptibility remains.\n" +
+      "• However, **Type 2 Diabetes Remission** is clinically proven, especially within the first 6 years of diagnosis.\n" +
+      "• **ADA Remission Definition:** Maintaining an **HbA1c < 6.5% for at least 3 months** without any glucose-lowering medications.\n\n" +
+      "#### 2. 🔬 The Science (DiRECT Trial)\n" +
+      "• Visceral fat accumulated in the pancreas impairs beta cells.\n" +
+      "• Losing **10–15 kg of weight** clears ectopic pancreatic fat, allowing beta cells to restore normal insulin secretion.\n" +
+      "• In the DiRECT trial, **86% of patients who lost 15+ kg achieved complete remission**."
+    );
+  }
+
+  // 3. Fruits, Sweets & Sugar
+  if (['fruit', 'mango', 'banana', 'apple', 'sweet', 'papaya', 'grape', 'orange', 'jaggery', 'honey', 'mithai', 'guava', 'watermelon'].some(k => lower.includes(k))) {
+    return (
+      "### 🍎 Fruits & Sweet Foods Guide for Diabetes\n\n" +
+      "Diabetic individuals **do not need to eliminate fruits**:\n\n" +
+      "• **Best Low-GI Fruits (Safe):** Apples, pears, guavas (amrood), berries, oranges, and papayas (1 medium fruit ~100g/day).\n" +
+      "• **High-GI Fruits (Portion Control):** Mangoes, bananas, chiku, grapes. Limit to 1–2 thin slices paired with a source of protein (e.g. 5–6 almonds).\n" +
+      "• **Avoid Fruit Juices:** Juicing eliminates soluble fiber, causing immediate sharp glucose surges.\n" +
+      "• **Jaggery & Honey:** Both affect blood sugar almost identically to white refined sugar."
+    );
+  }
+
+  // 4. Symptoms & Early Signs
+  if (['symptom', 'sign', 'warning', 'early', 'tired', 'thirst', 'urination', 'urine', 'weight loss', 'hunger', 'blurry', 'blurred', 'fatigue'].some(k => lower.includes(k))) {
+    return (
+      "### ⚠️ Warning Signs & Symptoms of Diabetes\n\n" +
+      "Classic clinical presentation consists of the **'3 Ps'**:\n\n" +
+      "1. **Polyuria:** Frequent urination, waking up repeatedly at night.\n" +
+      "2. **Polydipsia:** Unquenchable thirst and persistent dry mouth.\n" +
+      "3. **Polyphagia:** Constant hunger despite eating adequate food.\n\n" +
+      "• **Other signs:** Unexplained weight loss, chronic fatigue, blurred vision, slow-healing wounds, and tingling/numbness in fingers or toes."
+    );
+  }
+
+  // 5. Spikes (> 200 mg/dL)
+  if (['spike', 'high sugar', 'high glucose', '200', '250', '300', '350', '400', 'hyperglycemia'].some(k => lower.includes(k))) {
+    return (
+      "### 🚨 Managing High Blood Sugar Spikes (> 200 mg/dL)\n\n" +
+      "1. **Hydrate:** Drink 2–3 glasses of water to assist renal filtration of glucose.\n" +
+      "2. **Light Movement:** Take a 15–20 minute gentle walk to activate insulin-independent GLUT4 muscle uptake.\n" +
+      "3. **Zero Carbs:** Avoid carbs for the next meal; choose green salad and protein.\n" +
+      "4. **Emergency:** If > 300 mg/dL with vomiting, deep rapid breathing, or confusion, seek immediate hospital care (DKA/HHS risk)."
+    );
+  }
+
+  // 6. Hypoglycemia (< 70 mg/dL)
+  if (['hypo', 'low sugar', 'low blood sugar', 'shiver', 'shaking', 'sweat', 'sweating', 'dizzy', '70'].some(k => lower.includes(k))) {
+    return (
+      "### ⚡ Emergency Hypoglycemia Protocol (Rule of 15)\n\n" +
+      "If blood sugar falls **< 70 mg/dL**:\n\n" +
+      "1. **Consume 15g fast-acting sugar:** 1/2 cup fruit juice, 3–4 glucose tablets, or 1 tbsp sugar in water.\n" +
+      "2. **Wait 15 minutes** and re-test.\n" +
+      "3. If still < 70 mg/dL, **repeat with another 15g**.\n" +
+      "4. Once normalized, eat a small snack with complex carbs & protein."
+    );
+  }
+
+  // 7. Medications
+  if (['medicine', 'medication', 'drug', 'pill', 'tablet', 'metformin', 'insulin', 'sglt2', 'glp1', 'glp-1'].some(k => lower.includes(k))) {
+    return (
+      "### 💊 Overview of Modern Diabetes Medications (ADA 2024)\n\n" +
+      "• **Metformin:** First-line therapy; suppresses hepatic gluconeogenesis and improves muscle insulin sensitivity.\n" +
+      "• **SGLT2 Inhibitors (Dapagliflozin, Empagliflozin):** Promotes glucose excretion via urine; cardiorenal protection.\n" +
+      "• **GLP-1 Receptor Agonists (Semaglutide):** Incretin mimetics that enhance glucose-dependent insulin and support weight loss.\n" +
+      "• **Insulin:** Vital for Type 1 and advanced Type 2 when beta cells require exogenous support."
+    );
+  }
 
   if (lower.includes('daily') || lower.includes('routine') || lower.includes('royine') || lower.includes('care') || lower.includes('life')) {
     return (
